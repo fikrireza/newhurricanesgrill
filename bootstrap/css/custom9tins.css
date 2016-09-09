@@ -1,0 +1,26 @@
+.login-logo-custom{
+  width: 100%;
+  height: auto;
+  overflow: auto;
+}
+
+.logo-custom{
+  float: left;
+  width: 70px;
+  height: auto;
+  margin-top:20px;
+  margin-left:50px;
+}
+
+.logo-name-custom{
+  float: left;
+  padding-top: 10px;
+  width: 70%;
+  height: auto;
+  font-size: 20px;
+}
+
+.head-logo-name{
+  font-size: 30px;
+  font-weight: bold;
+}
