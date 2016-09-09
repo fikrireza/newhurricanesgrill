@@ -17,8 +17,10 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('avatar')->default('default.jpg');
-            $table->integer('level', 1);
+            $table->integer('level')->unsigned();
+            $table->integer('branch_id')->nullable();
             $table->string('password');
+            $table->integer('flag_active')->unsigned();
             $table->rememberToken();
             $table->timestamps();
         });
