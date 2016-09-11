@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->integer('level')->unsigned();
             $table->integer('branch_id')->nullable();
             $table->string('password');
+            $table->integer('activated')->unsigned();
             $table->integer('flag_active')->unsigned();
             $table->rememberToken();
             $table->timestamps();
