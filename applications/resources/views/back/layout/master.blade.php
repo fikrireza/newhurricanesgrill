@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    @include('back.includes.head')
     @yield('title')
+    @include('back.includes.head')
+    @yield('headscript')
   </head>
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-red sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
@@ -38,5 +39,6 @@
 
     </div><!-- ./wrapper -->
     @include('back.includes.bottomscript')
+    @yield('script')
   </body>
 </html>

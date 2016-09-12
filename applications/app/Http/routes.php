@@ -16,9 +16,22 @@ Route::get('/', function () {
 });
 
 
+Route::get('hurricanesmenu/dahsboard', 'DashboardController@index')->name('dashboard');
 
-Route::get('hurricanesmenu/dahsboard', 'DashboardController@index');
 
+// Account Management //
+Route::get('hurricanesmenu/account-management', 'AccountManagementController@index')->name('account');
+Route::post('hurricanesmenu/account-create', 'AccountManagementController@store')->name('account.create');
+
+
+// Branch Management //
+Route::get('hurricanesmenu/branch-management', 'BranchController@index')->name('branch');
+Route::get('hurricanesmenu/branch-create', 'BranchController@create')->name('branch.view');
+Route::post('hurricanesmenu/branch-create', 'BranchController@store')->name('branch.create');
+Route::get('hurricanesmenu/branch-bind/{id}', 'BranchController@bind')->name('branch.bind');
+Route::post('hurricanesmenu/branch-update', 'BranchController@update')->name('branch.update');
+Route::get('hurricanesmenu/branch-nonactive/{id}', 'BranchController@nonactive');
+Route::get('hurricanesmenu/branch-active/{id}', 'BranchController@active');
 
 
 // For Auth //
