@@ -15,9 +15,9 @@
       <!-- User Account: style can be found in dropdown.less -->
       <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+            <img src="{{ url('/') }}/images/{{Auth::user()->avatar}}" class="user-image" alt="User Image">
           <span class="hidden-xs">
-            Fulan Bin Fulan
+            {{ Auth::user()->name }}
           </span>
         </a>
         <ul class="dropdown-menu">
@@ -25,9 +25,9 @@
           <li class="user-header">
             <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
             <p>
-              Fulan Bin Fulan
+              {{ Auth::user()->name }}
               <small>
-                Terdaftar tahun 2016
+                {{ Auth::user()->level }}
               </small>
             </p>
           </li>
@@ -35,10 +35,10 @@
           <!-- Menu Footer-->
           <li class="user-footer">
             <div class="pull-left">
-              <a href="#" class="btn btn-default btn-flat">Profile</a>
+              <a href="{{ route('profile') }}" class="btn btn-default btn-flat">Profile</a>
             </div>
             <div class="pull-right">
-              <a href="#" class="btn btn-default btn-flat">Sign out</a>
+              <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Sign out</a>
             </div>
           </li>
         </ul>

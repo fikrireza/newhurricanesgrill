@@ -6,8 +6,6 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\RegisterRequest;
 
 use Mail;
 use Illuminate\Support\Facades\Input;
@@ -41,6 +39,12 @@ class AuthController extends Controller
   {
       $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
   }
+
+  public function index()
+  {
+    return view('back.login');
+  }
+
 	/**
 	 * Handle a login request to the application.
 	 *
@@ -48,8 +52,23 @@ class AuthController extends Controller
 	 * @param  Guard  $auth
 	 * @return Response
 	 */
-	public function postLogin(LoginRequest $request, Guard $auth)
+	public function postLogin(Request $request, Guard $auth)
 	{
+    // dd($request);
+    $message = [
+      'email.required' => 'Fill This Field',
+      'password.required' => 'Fill This Field'
+    ];
+
+    $validator = Validator::make($request->all(), [
+      'email' => 'required',
+      'password' => 'required|min:8',
+    ], $message);
+
+    if($validator->fails()) {
+      return redirect()->route('index')->withErrors($validator)->withInput();
+    }
+
     // dd($request);
 		$logValue = $request->input('email');
     // dd($logValue);
@@ -59,9 +78,9 @@ class AuthController extends Controller
     //dd($throttles);
 		if ($throttles && $this->hasTooManyLoginAttempts($request))
 		{
-			return redirect('login')->with('error', trans('front/login.maxattempt'))->withInput($request->only('email'));
+			return redirect()->route('index')->with('error', 'You have reached the maximum number of login attempts. Try again in one minute.')->withInput($request->only('email'));
 		}
-    
+
 		$credentials = [
 			$logAccess  => $logValue,
 			'password'  => $request->input('password')
@@ -73,13 +92,12 @@ class AuthController extends Controller
 			{
 			  $this->incrementLoginAttempts($request);
 			}
-			return redirect('login')->with('error', trans('front/login.credentials'))->withInput($request->only('email'));
+			return redirect()->route('index')->with('error', 'These credentials do not match our records.')->withInput($request->only('email'));
 		}
 
 		$user = $auth->getLastAttempted();
-		//dd($user->role->slug === 'admin');
-
-		if($user->activated)
+    // dd($user);
+		if($user->flag_active)
 		{
 			if ($throttles)
 			{
@@ -92,92 +110,27 @@ class AuthController extends Controller
 				$request->session()->forget('user_id');
 			}
 
-			if($user->role->slug === 'admin')
-			{
-				$set = User::find(Auth::user()->id);
-        $getcounter = $set->login_counter;
-        $set->login_counter = $getcounter+1;
-        $set->save();
-				return redirect('admin/dashboard');
-			}
-			else if($user->role->slug === 'redac')
-			{
-				$set = User::find(Auth::user()->id);
-        $getcounter = $set->login_counter;
-        $set->login_counter = $getcounter+1;
-        $set->save();
-				return redirect('admin/dashboard');
-			}
-			else if($user->role->slug === 'user')
-			{
-				$set = User::find(Auth::user()->id);
-        $getcounter = $set->login_counter;
-        $set->login_counter = $getcounter+1;
-        $set->save();
-				return redirect('/');
-			}
+			// $set = User::find(Auth::user()->id);
+      // $getcounter = $set->login_counter;
+      // $set->login_counter = $getcounter+1;
+      // $set->save();
+			return redirect()->route('dashboard');
 		}
+
 		$request->session()->put('user_id', $user->id);
-		return redirect('login')->with('error', trans('front/verify.again'));
+
+    return redirect()->route('index')->with('error', 'You must verify your email before you can access the site. ' .
+                '<br>If you have not received the confirmation email check your spam folder.'.
+                '<br>To get a new confirmation email please <a href="' . url('') . '" class="alert-link">clic here</a>.');
 	}
-  /**
-   * Form Registrasi
-   *
-   * @param App\Http\Requests\RegisterRequest $request
-   * @return Response
-   */
-  public function postRegister(RegisterRequest $request)
-  {
-      $confirmation_code	= str_random(30).time();
-  		$user = new User;
-  		$user->name		= $request->name;
-  		$user->email	=	$request->email;
-  		$user->password	= bcrypt($request->password);
-  		$user->role_id	= 3;
-  		$user->activated	= 0;
-  		$user->confirmation_code	= $confirmation_code;
-  		$user->save();
-  		$data	= [
-  			'title'  => trans('front/verify.email-title'),
-        'intro'  => trans('front/verify.email-intro'),
-        'link'   => trans('front/verify.email-link'),
-  			'name'	=> $request->name,
-  			'confirmation_code' => $confirmation_code,
-  			];
-  		Mail::send('emails.auth.verify', $data, function($message){
-  			$message->to(Input::get('email'), Input::get('name'))->subject('Aktivasi Akun Kitapunyaacara');
-  		});
-  		return redirect('/')->with('message', 'Silahkan Cek Folder Inbpx/Spam Pada Email Anda');
-  }
-  /**
-   * Untuk Konfirmasi Request
-   *
-   * @param string $confirmation_code $token
-   * @return Response
-   */
-  public function getConfirm($token)
-  {
-		$user = User::where('confirmation_code', $token)->first();
-      if($user->role_id == "3")
-      {
-        $user->confirmation_code = null;
-        $user->activated = 1;
-        $user->save();
-      }
-			return redirect('/')->with('message', "Terimakasih, Akun Anda Telah di Verifikasi");
-  }
-  /**
-	 * Handle a resend request.
-	 *
-	 * @param  App\Repositories\UserRepository $user_gestion
-	 * @param  Illuminate\Http\Request $request
-	 * @return Response
-	 */
-	public function getResend(Request $request)
-	{
-		//Belum bisa resend email
-		return redirect('/');
-	}
+
+  public function getLogout()
+    {
+      session()->flush();
+      Auth::logout();
+      return redirect()->route('index');
+    }
+
 }
 
 /*

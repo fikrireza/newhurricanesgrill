@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('front/index');
 });
 
+Route::get('hurricanesmenu', 'Auth\AuthController@index')->name('index');
 
 Route::get('hurricanesmenu/dashboard', 'DashboardController@index')->name('dashboard');
 
@@ -45,6 +46,6 @@ Route::get('hurricanesmenu/branch-active/{id}', 'BranchController@active');
 
 
 // Authentication //
-Route::post('login', 'CustomAuthController@loginprocess');
-Route::get('logout', 'CustomAuthController@getlogout');
-Route::auth();
+Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');
+Route::get('hurricanesmenu/logout', 'Auth\AuthController@getLogout')->name('logout');
+// Route::auth();
