@@ -33,14 +33,16 @@
     </li>
     <li class="treeview">
       <a href="#">
-        <i class="fa fa-users"></i>
-        <span>Menu 2</span>
+        <i class="fa fa-edit"></i>
+        <span>Reservation Management</span>
         <i class="fa fa-angle-left pull-right"></i>
       </a>
       <ul class="treeview-menu">
-        <li><a href="{{ url('hurricanesmenu/dahsboard')}}"><i class="fa fa-circle-o"></i> -----</a></li>
-        <li><a href="{{ url('hurricanesmenu/dahsboard')}}"><i class="fa fa-circle-o"></i> -----</a></li>
-        <li><a href="{{ url('hurricanesmenu/dahsboard')}}"><i class="fa fa-circle-o"></i> -----</a></li>
+        <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Reservation List</a></li>
+        <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Reservation Cancelled</a></li>
+        <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Reservation Block</a></li>
+        <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Group Booking Payment</a></li>
+        <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Reservation Report</a></li>
       </ul>
     </li>
     <li class="{{ Route::currentRouteNamed('branch') ? 'active' : '' }}{{ Route::currentRouteNamed('branch.view') ? 'active' : '' }}">
