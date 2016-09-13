@@ -16,12 +16,19 @@ Route::get('/', function () {
 });
 
 
-Route::get('hurricanesmenu/dahsboard', 'DashboardController@index')->name('dashboard');
+Route::get('hurricanesmenu/dashboard', 'DashboardController@index')->name('dashboard');
 
 
 // Account Management //
 Route::get('hurricanesmenu/account-management', 'AccountManagementController@index')->name('account');
-Route::post('hurricanesmenu/account-create', 'AccountManagementController@store')->name('account.create');
+Route::post('hurricanesmenu/account-create', 'AccountManagementController@create')->name('account.create');
+Route::post('hurricanesmenu/account-update', 'AccountManagementController@update')->name('account.update');
+Route::get('hurricanesmenu/verify/{code}', 'AccountManagementController@verify')->name('account.verify');
+Route::post('hurricanesmenu/setpassword', 'AccountManagementController@setpassword')->name('setpassword');
+Route::get('hurricanesmenu/account-bind/{id}', 'AccountManagementController@bind')->name('account.bind');
+Route::get('hurricanesmenu/account-resend/{id}', 'AccountManagementController@resend');
+Route::get('hurricanesmenu/account-disable/{id}', 'AccountManagementController@disable');
+Route::get('hurricanesmenu/account-active/{id}', 'AccountManagementController@active');
 
 
 // Branch Management //
@@ -34,5 +41,7 @@ Route::get('hurricanesmenu/branch-nonactive/{id}', 'BranchController@nonactive')
 Route::get('hurricanesmenu/branch-active/{id}', 'BranchController@active');
 
 
-// For Auth //
+// Authentication //
+Route::post('login', 'CustomAuthController@loginprocess');
+Route::get('logout', 'CustomAuthController@getlogout');
 Route::auth();

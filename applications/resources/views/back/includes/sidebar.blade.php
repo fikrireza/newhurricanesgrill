@@ -43,12 +43,12 @@
         <li><a href="{{ url('hurricanesmenu/dahsboard')}}"><i class="fa fa-circle-o"></i> -----</a></li>
       </ul>
     </li>
-    <li class="{{ Route::currentRouteNamed('branch') ? 'active' : '' }}">
+    <li class="{{ Route::currentRouteNamed('branch') ? 'active' : '' }}{{ Route::currentRouteNamed('branch.view') ? 'active' : '' }}">
       <a href="{{ route('branch') }}">
         <i class="fa fa-laptop"></i><span>Branch Management</span>
       </a>
     </li>
-    <li class="">
+    <li class="{{ Route::currentRouteNamed('account') ? 'active' : '' }}">
       <a href="{{ route('account') }}">
         <i class="fa fa-dashboard"></i> <span>Account Management</span>
       </a>
