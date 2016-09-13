@@ -30,6 +30,9 @@ Route::get('hurricanesmenu/account-resend/{id}', 'AccountManagementController@re
 Route::get('hurricanesmenu/account-disable/{id}', 'AccountManagementController@disable');
 Route::get('hurricanesmenu/account-active/{id}', 'AccountManagementController@active');
 
+Route::get('hurricanesmenu/profile', 'AccountManagementController@profile')->name('profile');
+Route::post('hurricanesmenu/profile-update', 'AccountManagementController@profileUpdate')->name('profile.update');
+Route::post('hurricanesmenu/profile-changePassord', 'AccountManagementController@changePassword')->name('profile.changePassword');
 
 // Branch Management //
 Route::get('hurricanesmenu/branch-management', 'BranchController@index')->name('branch');

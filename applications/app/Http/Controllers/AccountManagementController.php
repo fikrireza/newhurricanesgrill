@@ -261,4 +261,67 @@ class AccountManagementController extends Controller
 
     return redirect()->route('account')->with('message', 'Account Data Has Been Edited');
   }
+
+  public function profile()
+  {
+    $id = Auth::user()->id;
+    $getProfile = User::find($id);
+
+    return view('back.pages.account.profile', compact('getProfile'));
+  }
+
+  public function profileUpdate(Request $request)
+  {
+    $file = $request->file('avatar');
+
+    if ($file==null) {
+      $set = User::find($request->id);
+      $set->name = $request->name;
+      $set->save();
+    }
+    else {
+      $photo_name = time(). '.' . $file->getClientOriginalExtension();
+      Image::make($file)->resize(200,200)->save('images/'. $photo_name);
+
+      $set = User::find($request->id);
+      $set->name = $request->name;
+      $set->avatar = $photo_name;
+      $set->save();
+    }
+
+    return redirect()->route('profile')->with('message', 'Profile Has Been Changed.');
+  }
+
+  public function changePassword(Request $request)
+  {
+    $get = User::find($request->id);
+
+    $messages = [
+      'oldpass.required' => "Fill Old Password.",
+      'newpass.required' => "Fill New Password.",
+      'newpass.confirmed' => "Password Did Not Match.",
+      'newpass_confirmation.required' => "Fill This Field.",
+    ];
+
+    $validator = Validator::make($request->all(), [
+      'oldpass' => 'required',
+      'newpass' => 'required|confirmed|min:8',
+      'newpass_confirmation' => 'required'
+    ], $messages);
+
+    if ($validator->fails()) {
+      return redirect()->route('profile')->withErrors($validator)->withInput();
+    }
+
+    if(Hash::check($request->oldpass, $get->password))
+    {
+      $get->password = Hash::make($request->newpass);
+      $get->save();
+
+      return redirect()->route('profile')->with('message', "Password Has Been Changed.");
+    }
+    else {
+      return redirect()->route('profile')->with('erroroldpass', 'Password Did Not Match.');
+    }
+  }
 }

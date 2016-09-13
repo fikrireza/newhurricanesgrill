@@ -48,10 +48,16 @@
         <i class="fa fa-laptop"></i><span>Branch Management</span>
       </a>
     </li>
-    <li class="{{ Route::currentRouteNamed('account') ? 'active' : '' }}">
-      <a href="{{ route('account') }}">
-        <i class="fa fa-dashboard"></i> <span>Account Management</span>
+    <li class="treeview {{ Route::currentRouteNamed('account') ? 'active' : '' }}{{ Route::currentRouteNamed('profile') ? 'active' : '' }}">
+      <a href="#">
+        <i class="fa fa-dashboard"></i>
+        <span>Account Management</span>
+        <i class="fa fa-angle-left pull-right"></i>
       </a>
+      <ul class="treeview-menu">
+        <li class="{{ Route::currentRouteNamed('account') ? 'active' : '' }}"><a href="{{ route('account') }}"><i class="fa fa-circle-o"></i> <span>Create Account</span></a></li>
+        <li class="{{ Route::currentRouteNamed('profile') ? 'active' : '' }}"><a href="{{ route('profile') }}"><i class="fa fa-circle-o"></i> <span>Profile</span></a></li>
+      </ul>
     </li>
   </ul>
 </section>
