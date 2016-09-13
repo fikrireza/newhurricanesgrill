@@ -20,11 +20,11 @@
     <!-- START MESSAGE -->
     <div class="col-md-12">
       @if(Session::has('message'))
-        <div class="alert alert-success panjang">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-          <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
-          <p>{{ Session::get('message') }}</p>
-        </div>
+      <div class="alert alert-success panjang">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-check"></i> Succeed!</h4>
+        <p>{{ Session::get('message') }}</p>
+      </div>
       @endif
     </div>
     <!-- START FORM-->
@@ -41,11 +41,7 @@
                 <label class="col-sm-2 control-label">Name</label>
               </div>
               <div class="col-sm-10 {{ $errors->has('name') ? 'has-error' : '' }}">
-                <input type="text" name="name" class="form-control" placeholder="Name"
-                @if($errors->has('name'))
-                  value="{{ old('name') }}"
-                @endif
-                >
+                <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}">
                 @if($errors->has('name'))
                   <span class="help-block">
                     <i>* {{$errors->first('name')}}</i>
@@ -57,11 +53,7 @@
               <div class="{{ $errors->has('address') ? 'has-error' : '' }}">
                 <label class="col-sm-2 control-label">Address</label>
               <div class="col-sm-10 {{ $errors->has('address') ? 'has-error' : '' }}">
-                <input type="text" name="address" class="form-control" placeholder="Address"
-                @if($errors->has('address'))
-                  value="{{ old('address') }}"
-                @endif
-                >
+                <input type="text" name="address" class="form-control" placeholder="Address" value="{{ old('address') }}">
                 @if($errors->has('address'))
                   <span class="help-block">
                     <i>* {{$errors->first('address')}}</i>
@@ -75,7 +67,7 @@
                 <label class="col-sm-2 control-label">Description</label>
               </div>
               <div class="col-sm-10 {{ $errors->has('description') ? 'has-error' : '' }}">
-                <textarea class="textarea form-control" name="description" placeholder="Description Open Hours" style="width: 100%; height: 200px; font-size: 14px; border: 1px solid #dddddd; padding: 10px;">@if($errors->has('description')){{ old('description') }}@endif</textarea>
+                <textarea class="textarea form-control" name="description" placeholder="Description Open Hours" style="width: 100%; height: 200px; font-size: 14px; border: 1px solid #dddddd; padding: 10px;">{{ old('description') }}</textarea>
                 @if($errors->has('description'))
                   <span class="help-block">
                     <i>* {{$errors->first('description')}}</i>
@@ -88,11 +80,7 @@
                 <label class="col-sm-2 control-label">Phone</label>
               </div>
               <div class="col-sm-10 {{ $errors->has('phone') ? 'has-error' : '' }}">
-                <input type="text" name="phone" class="form-control" placeholder="Phone"
-                @if($errors->has('phone'))
-                  value="{{ old('phone') }}"
-                @endif
-                >
+                <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{ old('phone') }}">
                 @if($errors->has('phone'))
                   <span class="help-block">
                     <i>* {{$errors->first('phone')}}</i>
@@ -105,11 +93,7 @@
                 <label class="col-sm-2 control-label">Hotline</label>
               </div>
               <div class="col-sm-10 {{ $errors->has('hotline') ? 'has-error' : '' }}">
-                <input type="text" name="hotline" class="form-control" placeholder="Hotline"
-                @if($errors->has('hotline'))
-                  value="{{ old('hotline') }}"
-                @endif
-                >
+                <input type="text" name="hotline" class="form-control" placeholder="Hotline" value="{{ old('hotline') }}">
                 @if($errors->has('hotline'))
                   <span class="help-block">
                     <i>* {{$errors->first('hotline')}}</i>
@@ -122,11 +106,7 @@
                 <label class="col-sm-2 control-label">Maps</label>
               </div>
               <div class="col-sm-10 {{ $errors->has('maps') ? 'has-error' : '' }}">
-                <input type="text" name="maps" class="form-control" placeholder="Maps"
-                @if($errors->has('maps'))
-                  value="{{ old('maps') }}"
-                @endif
-                >
+                <input type="text" name="maps" class="form-control" placeholder="Maps" value="{{ old('maps') }}">
                 @if($errors->has('maps'))
                   <span class="help-block">
                     <i>* {{$errors->first('maps')}}</i>

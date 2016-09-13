@@ -10,6 +10,8 @@ use App\Http\Requests;
 use App\Models\Branch;
 use App\Models\User;
 
+use App\Http\Requests\BranchRequest;
+
 class BranchController extends Controller
 {
 
@@ -25,32 +27,8 @@ class BranchController extends Controller
       return view('back.pages.branch.create');
     }
 
-    public function store(Request $request)
+    public function store(BranchRequest $request)
     {
-      // dd($request);
-      $message = [
-        'name.required'         =>  'Fill This Field',
-        'address.required'      =>  'Fill This Field',
-        'description.required'  =>  'Fill This Field',
-        'phone.required'        =>  'Fill This Field',
-        'hotline.required'      =>  'Fill This Field',
-        'maps.required'         =>  'Fill This Field',
-      ];
-
-      $validator  = Validator::make($request->all(), [
-        'name'        =>  'required',
-        'address'     =>  'required',
-        'description' =>  'required',
-        'phone'       =>  'required',
-        'hotline'     =>  'required',
-        'maps'        =>  'required',
-      ], $message);
-
-      if($validator->fails())
-      {
-        return redirect()->route('branch.view')->withErrors($validator)->withInput();
-      }
-
       $branch = new Branch;
       $branch->name   = $request->name;
       $branch->address  = $request->address;
@@ -71,9 +49,20 @@ class BranchController extends Controller
       return $get;
     }
 
-    public function update($id)
+    public function update(BranchRequest $request)
     {
+      $branch = Branch::find($request->id);
+      $branch->name         = $request->name;
+      $branch->address      = $request->address;
+      $branch->description  = $request->description;
+      $branch->phone        = $request->phone;
+      $branch->hotline      = $request->hotline;
+      $branch->maps         = $request->maps;
+      $branch->user_id      = $request->user_id;
+      $branch->flag_active  = $request->flag_active;
+      $branch->save();
 
+      return redirect()->route('branch')->with('message', 'Branch Data Has Been Updated');
     }
 
     public function nonactive($id)
