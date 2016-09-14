@@ -11,7 +11,7 @@
   <ol class="breadcrumb">
     <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
     <li><a href="{{ route('reservation') }}">Reservation Management</a></li>
-    <li class="active">New Reservation</li>
+    <li class="active">Update Reservation</li>
   </ol>
 @stop
 
@@ -27,37 +27,19 @@
       @endif
     </div>
     <div class="col-md-6">
-      <form class="form-horizontal" method="post" action="{{ route('reservation.store') }}">
+      <form class="form-horizontal" method="post" action="{{ route('reservation.update') }}">
         {{ csrf_field() }}
       <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">New Reservation</h3>
+            <h3 class="box-title">Update Reservation</h3>
         </div>
         <div class="box-body">
-          <div class="form-group">
-            <div class="{{ $errors->has('branch_id') ? 'has-error' : '' }}">
-              <label class="col-sm-3 control-label">Location</label>
-            </div>
-            <div class="col-sm-9 {{ $errors->has('branch_id') ? 'has-error' : '' }}">
-              <select name="branch_id" class="form-control">
-                <option value="-- Choose --">-- Choose --</option>
-                @foreach($getBranch as $key)
-                  <option value="{{ $key->id }}" {{ old('branch_id') == $key->id ? 'selected' : '' }}>{{ $key->name }}</option>
-                @endforeach
-              </select>
-              @if($errors->has('branch_id'))
-                <span class="help-block">
-                  <i>* {{$errors->first('branch_id')}}</i>
-                </span>
-              @endif
-            </div>
-          </div>
           <div class="form-group">
             <div class="{{ $errors->has('reserve_date') ? 'has-error' : '' }}">
               <label class="col-sm-3 control-label">Date</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('reserve_date') ? 'has-error' : '' }}">
-              <input type="text" name="reserve_date" class="form-control" id="reserve_date" value="{{ old('reserve_date') }}">
+              <input type="text" name="reserve_date" class="form-control" id="reserve_date" value="{{ old('reserve_date') ? '' : $get->reserve_date }}">
               @if($errors->has('reserve_date'))
                 <span class="help-block">
                   <i>* {{$errors->first('reserve_date')}}</i>
@@ -71,7 +53,7 @@
             </div>
             <div class="col-sm-9 {{ $errors->has('reserve_time') ? 'has-error' : '' }}">
               <select name="reserve_time" class="form-control">
-          			<option value="-- Choose --">-- Choose --</option>
+          			<option value="{{ $get->reserve_time }}" selected="">{{ $get->reserve_time }}</option>
                 <option value="11:00" {{ old('reserve_time') == '11:00' ? 'selected' : '' }}>11:00</option>
           			<option value="11:30" {{ old('reserve_time') == '11:30' ? 'selected' : '' }}>11:30</option>
           			<option value="12:00" {{ old('reserve_time') == '12:00' ? 'selected' : '' }}>12:00</option>
@@ -108,7 +90,7 @@
               <label class="col-sm-3 control-label">Name</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('name') ? 'has-error' : '' }}">
-              <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}">
+              <input type="text" name="name" class="form-control" placeholder="Name" value="{{ $get->name }}">
               @if($errors->has('name'))
                 <span class="help-block">
                   <i>* {{$errors->first('name')}}</i>
@@ -121,7 +103,7 @@
               <label class="col-sm-3 control-label">Handphone</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('handphone') ? 'has-error' : '' }}">
-              <input type="text" name="handphone" class="form-control" placeholder="Handphone" value="{{ old('handphone') }}" maxlength="17" onkeypress="return isNumber(event)">
+              <input type="text" name="handphone" class="form-control" placeholder="Handphone" value="{{ $get->handphone }}" maxlength="17" onkeypress="return isNumber(event)">
               @if($errors->has('handphone'))
                 <span class="help-block">
                   <i>* {{$errors->first('handphone')}}</i>
@@ -134,7 +116,7 @@
               <label class="col-sm-3 control-label">Size</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('size') ? 'has-error' : '' }}">
-              <input type="text" name="size" class="form-control" placeholder="Size" value="{{ old('size') }}" maxlength="3" onkeypress="return isNumber(event)">
+              <input type="text" name="size" class="form-control" placeholder="Size" value="{{ $get->size }}" maxlength="3" onkeypress="return isNumber(event)">
               @if($errors->has('size'))
                 <span class="help-block">
                   <i>* {{$errors->first('size')}}</i>
@@ -147,7 +129,7 @@
               <label class="col-sm-3 control-label">Email</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('email') ? 'has-error' : '' }}">
-              <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
+              <input type="email" name="email" class="form-control" placeholder="Email" value="{{ $get->email }}" readonly="">
               @if($errors->has('email'))
                 <span class="help-block">
                   <i>* {{$errors->first('email')}}</i>
@@ -160,8 +142,9 @@
               <label class="col-sm-3 control-label">Special Request</label>
             </div>
             <div class="col-sm-9">
-              <textarea class="textarea form-control" name="specialreq" placeholder="Special Request Form Customer" style="width: 100%; height: 200px; font-size: 14px; border: 1px solid #dddddd; padding: 10px;">{{ old('specialreq') }}</textarea>
-              <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+              <textarea class="textarea form-control" name="specialreq" placeholder="Special Request Form Customer" style="width: 100%; height: 200px; font-size: 14px; border: 1px solid #dddddd; padding: 10px;">{{ $get->specialreq }}</textarea>
+              <input type="hidden" name="id" class="form-control" value="{{ $get->id }}">
+              <input type="hidden" name="user_id" class="form-control" value="{{ Auth::user()->id }}">
             </div>
           </div>
         </div>
@@ -191,7 +174,7 @@ function isNumber(evt) {
   //Date picker
   $('#reserve_date').datepicker({
     startDate: '+d',
-    format: 'dd-M-yyyy',
+    format: 'yyyy-mm-dd',
     todayHighlight: true,
     autoclose: true
   });

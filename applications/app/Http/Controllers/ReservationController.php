@@ -20,27 +20,61 @@ class ReservationController extends Controller
     public function index()
     {
       $today = date('Y-m-d');
-      $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
-                                ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
-                                ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
-                                ->where('reserve_date', '=', $today)
-                                ->orderBy('reserve_time', 'asc')
-                                ->get();
+      $branch = Auth::user()->branch_id;
 
-      $grouping = collect($getReservation);
-      $allReservation = $grouping->groupBy('reserve_time')->toArray();
+      if($branch != null)
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('reserve_date', '=', $today)
+                                  ->where('fra_branch.id', '=', $branch)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
 
-      $getSize = DB::table('fra_reservation')
-                        ->select(DB::raw('SUM(size) as total_size'))
-                        ->where('reserve_date', '=', $today)
-                        ->get();
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('branch_id', '=', $branch)
+                          ->where('reserve_date', '=', $today)
+                          ->get();
+      }
+      else
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('reserve_date', '=', $today)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('reserve_date', '=', $today)
+                          ->get();
+      }
 
       return view('back.pages.reservation.index', compact('allReservation', 'getSize'));
+
     }
 
     public function create()
     {
-      $getBranch = Branch::get();
+      $branch = Auth::user()->branch_id;
+
+      if($branch != null)
+      {
+        $getBranch = Branch::where('id', $branch)->get();
+      }
+      else
+      {
+        $getBranch = Branch::get();
+      }
 
       return view('back.pages.reservation.create', compact('getBranch'));
     }
@@ -157,9 +191,11 @@ class ReservationController extends Controller
           'specialreq'    => $request->specialreq
           ]);
 
+        $branch = array($branch);
+
         if($request->email != null)
         {
-          Mail::send('email.booking', ['data' => $data, $branch], function($message) {
+          Mail::send('email.booking', ['data' => $data, 'branch' => $branch], function($message) {
             $message->to(Input::get('email'), Input::get('email'))->subject('Booking Confirmation for Hurricane’s Grill Indonesia');
           });
         }
@@ -169,5 +205,45 @@ class ReservationController extends Controller
       }
     }
 
+    public function bind($id)
+    {
+      $get  = Reservation::find($id);
 
+      return view('back.pages.reservation.update', compact('get'));
+    }
+
+    public function update(Request $request)
+    {
+      $message = [
+        'reserve_date.required'  => 'Fill This Field',
+        'reserve_time.required'  => 'Fill This Field',
+        'name.required' => 'Fill This Field',
+        'size.required' => 'Fill This Field',
+        'handphone.required'  => 'Fill This Field'
+      ];
+
+      $validator = Validator::make($request->all(), [
+        'reserve_date' => 'required',
+        'reserve_time'  => 'required',
+        'name'    => 'required',
+        'size'    => 'required',
+        'handphone' => 'required'
+      ], $message);
+
+
+      if($validator->fails()) {
+        return redirect()->route('reservation.bind', array('id' => $request->id))->withErrors($validator)->withInput();
+      }
+
+      $update = Reservation::find($request->id);
+      $update->reserve_date = $request->reserve_date;
+      $update->reserve_time = $request->reserve_time;
+      $update->name         = $request->name;
+      $update->size         = $request->size;
+      $update->handphone    = $request->handphone;
+      $update->user_id      = $request->user_id;
+      $update->save();
+
+      return redirect()->route('reservation')->with('message', 'The Reservation Has Been Updated.');
+    }
 }

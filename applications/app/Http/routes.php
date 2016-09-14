@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('front/index');
 });
 
-Route::get('hurricanesmenu', 'Auth\AuthController@index')->name('index');
+Route::get('/hurricanesmenu', 'Auth\AuthController@index')->name('index');
 
 Route::get('hurricanesmenu/dashboard', 'DashboardController@index')->name('dashboard');
 
@@ -48,6 +48,10 @@ Route::get('hurricanesmenu/branch-active/{id}', 'BranchController@active');
 Route::get('hurricanesmenu/reservation-management', 'ReservationController@index')->name('reservation');
 Route::get('hurricanesmenu/reservation-create', 'ReservationController@create')->name('reservation.create');
 Route::post('hurricanesmenu/reservation-store', 'ReservationController@store')->name('reservation.store');
+Route::get('hurricanesmenu/reservation-bind/{id}', 'ReservationController@bind')->name('reservation.bind');
+Route::post('hurricanesmenu/reservation-update', 'ReservationController@update')->name('reservation.update');
+
+Route::get('hurricanesmenu/payment-confirm/', 'ReservationController@payment')->name('reservation.payment');
 
 // Authentication //
 Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');
