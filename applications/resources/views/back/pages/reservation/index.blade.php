@@ -247,7 +247,7 @@
               </tr>
             </tbody>
             @else
-              <?php $hitung = 0; ?>
+              <?php $grandTotal = 0; ?>
               @foreach($allReservation as $reservation)
               @foreach($reservation as $reservation_time)
 
@@ -277,11 +277,16 @@
                 <td>{{ $reservation_time['created_at'] }}</td>
                 <td>Edit Cancel Accept Confirm</td>
               </tr>
+              <?php $grandTotal++; ?>
               @endforeach
-              @endforeach
-              <?php $hitung++; ?>
               <tr style="background:#069;color:#FFF">
-                <td colspan="6">Reservation Grand Total : {{ $hitung }}</td>
+                <td colspan="6">Reservation Total : </td>
+                <td></td>
+                <td colspan="5"></td>
+              </tr>
+              @endforeach
+              <tr style="background:#069;color:#FFF">
+                <td colspan="6">Reservation Grand Total : {{ $grandTotal }}</td>
                 <td>{{ $getSize[0]->total_size }}</td>
                 <td colspan="5"></td>
               </tr>
