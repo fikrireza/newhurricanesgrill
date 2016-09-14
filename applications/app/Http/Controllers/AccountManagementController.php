@@ -169,7 +169,7 @@ class AccountManagementController extends Controller
       $getcounter = $set->login_counter;
       $set->save();
 
-      return redirect('dashboard')->with('firsttimelogin', "Anda telah berhasil melakukan aktifasi akun. Selanjutnya, anda bisa menggunakan akun ini untuk login ke dalam sistem dan dapat menggunakan fitur yang telah disediakan.");
+      return redirect()->route('dashboard')->with('firsttimelogin', "Anda telah berhasil melakukan aktifasi akun. Selanjutnya, anda bisa menggunakan akun ini untuk login ke dalam sistem dan dapat menggunakan fitur yang telah disediakan.");
     }
     else {
       return redirect()->route('welcomepage')->with('message', "Silahkan lakukan login.");
