@@ -44,6 +44,10 @@ Route::post('hurricanesmenu/branch-update', 'BranchController@update')->name('br
 Route::get('hurricanesmenu/branch-nonactive/{id}', 'BranchController@nonactive');
 Route::get('hurricanesmenu/branch-active/{id}', 'BranchController@active');
 
+// Reservation Management //
+Route::get('hurricanesmenu/reservation-management', 'ReservationController@index')->name('reservation');
+Route::get('hurricanesmenu/reservation-create', 'ReservationController@create')->name('reservation.create');
+Route::post('hurricanesmenu/reservation-store', 'ReservationController@store')->name('reservation.store');
 
 // Authentication //
 Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');

@@ -5,6 +5,10 @@
 <!-- DataTables -->
 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+<!-- InputMask -->
+<script src="{{asset('plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{asset('plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{asset('plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <!-- SlimScroll -->
 <script src="{{asset('plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
