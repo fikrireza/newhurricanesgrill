@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests;
 use App\Models\Branch;
 use App\Models\User;
+use Auth;
 
 use App\Http\Requests\BranchRequest;
 
@@ -24,6 +25,7 @@ class BranchController extends Controller
 
     public function create()
     {
+
       return view('back.pages.branch.create');
     }
 

@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-sm-10 {{ $errors->has('name') ? 'has-error' : '' }}">
                   <input type="hidden" name="id" class="form-control" id="editId" value="{{ old('id') }}">
-                  <input type="hidden" name="user_id" class="form-control" id="editUser" value="{{ old('user_id') }}">
+                  <input type="hidden" name="user_id" class="form-control" id="editUser" value="{{ Auth::user()->id }}">
                   <input type="text" name="name" class="form-control" id="editName" placeholder="Name" value="{{ old('name') }}">
                   @if($errors->has('name'))
                     <span class="help-block">
