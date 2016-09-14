@@ -1,25 +1,4 @@
 <!DOCTYPE html>
-{{-- <html>
-  <head>
-    <meta charset="utf-8">
-  </head>
-  <body>
-    <p>
-      Dear, {{ $data[0]['email'] }}.
-    </p>
-
-    <p>
-      Your Email Has Been Registered as <b>{{ $data[0]['akses'] }}</b> Role on Hurricane's Grill Website.
-      <br>Please Click This Link For Activation :<br><br>
-
-      <a href="{{ URL::to('hurricanesmenu/verify//' . $data[0]['activation_code']) }}">
-        {{ URL::to('hurricanesmenu/verify/' . $data[0]['activation_code']) }}
-      </a>
-    </p>
-
-  </body>
-</html> --}}
-
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
@@ -124,7 +103,7 @@
   </table>
 
   <strong>After you make payment, please kindly confirm your payment by clicking this
-    <a href="http://hurricanesgrill.co.id/page/confirmpayment.php?code='.$code.'" >link</a>. </strong>
+    <a href="{{ URL::to('hurricanesmenu/payment-confirm//' . $data[0]['booking_code']) }}" >link</a>. </strong>
     <br />
     <br />
     For more information, Please Call : <a href="tel:+622127513388">+6221 2751 3388</a> (Hurricanes Grill Indonesia)
