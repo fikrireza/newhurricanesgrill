@@ -166,8 +166,21 @@
                   @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 3 || Auth::user()->level == 4)
                   <span data-toggle="tooltip" title="Edit Reservation">
                     <a href="{{ url('hurricanesmenu/reservation-bind') }}{{'/'.$reservation_time['id']}}" class="btn btn-warning btn-flat btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-edit"></i></a>
+                  </span>&nbsp;
+                  <span data-toggle="tooltip" title="Cancel Reservation">
+                    <a href="{{ url('hurricanesmenu/reservation-cancel') }}{{'/'.$reservation_time['id']}}" class="btn btn-danger btn-flat btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-ban"></i></a>
+                  </span>&nbsp;
+                  <span data-toggle="tooltip" title="Accept Reservation">
+                    <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$reservation_time['id']}}" class="btn btn-success btn-flat btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-check"></i></a>
                   </span>
-                  @endif Cancel Accept Confirm</td>
+                  @endif
+                  @if($reservation_time['size'] > 9)
+                    @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 4)
+                  <span data-toggle="tooltip" title="Confirm Reservation">
+                    <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$reservation_time['id']}}" class="btn btn-default btn-flat btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-check-square-o"></i></a>
+                  </span>
+                    @endif
+                  @endif</td>
               </tr>
               <?php $grandTotal++; ?>
               @endforeach

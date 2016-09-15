@@ -50,6 +50,9 @@ Route::get('hurricanesmenu/reservation-create', 'ReservationController@create')-
 Route::post('hurricanesmenu/reservation-store', 'ReservationController@store')->name('reservation.store');
 Route::get('hurricanesmenu/reservation-bind/{id}', 'ReservationController@bind')->name('reservation.bind');
 Route::post('hurricanesmenu/reservation-update', 'ReservationController@update')->name('reservation.update');
+Route::get('hurricanesmenu/reservation-cancelled/{id}', 'ReservationController@cancelled')->name('reservation.cancelled');
+Route::get('hurricanesmenu/reservation-cancel', 'ReservationController@cancel')->name('reservation.cancel');
+Route::get('hurricanesmenu/reservation-accept/{id}', 'ReservationController@accept')->name('reservation.accept');
 
 Route::get('hurricanesmenu/payment-confirm/', 'ReservationController@payment')->name('reservation.payment');
 

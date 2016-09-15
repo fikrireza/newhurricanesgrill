@@ -29,6 +29,7 @@ class ReservationController extends Controller
                                   ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
                                   ->where('reserve_date', '=', $today)
                                   ->where('fra_branch.id', '=', $branch)
+                                  ->where('status', '!=', 2)
                                   ->orderBy('reserve_time', 'asc')
                                   ->get();
 
@@ -38,6 +39,7 @@ class ReservationController extends Controller
         $getSize = DB::table('fra_reservation')
                           ->select(DB::raw('SUM(size) as total_size'))
                           ->where('branch_id', '=', $branch)
+                          ->where('status', '!=', 2)
                           ->where('reserve_date', '=', $today)
                           ->get();
       }
@@ -47,6 +49,7 @@ class ReservationController extends Controller
                                   ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
                                   ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
                                   ->where('reserve_date', '=', $today)
+                                  ->where('status', '!=', 2)
                                   ->orderBy('reserve_time', 'asc')
                                   ->get();
 
@@ -56,6 +59,7 @@ class ReservationController extends Controller
         $getSize = DB::table('fra_reservation')
                           ->select(DB::raw('SUM(size) as total_size'))
                           ->where('reserve_date', '=', $today)
+                          ->where('status', '!=', 2)
                           ->get();
       }
 
@@ -245,5 +249,51 @@ class ReservationController extends Controller
       $update->save();
 
       return redirect()->route('reservation')->with('message', 'The Reservation Has Been Updated.');
+    }
+
+    public function cancelled($id)
+    {
+      $user = Auth()->user()->id;
+
+      $cancel = Reservation::find($id);
+
+      $cancel->status   = 2;
+      $cancel->user_id  = $user;
+      $cancel->save();
+
+      return redirect()->route('reservation')->with('message', 'The Reservation Has Been Cancelled.');
+    }
+
+    public function accept($id)
+    {
+      $accept = Reservation::find($id);
+      dd($accept);
+    }
+
+    public function cancel()
+    {
+      $branch = Auth::user()->branch_id;
+
+      if($branch != null)
+      {
+        $allCancel = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('status', '=', 2)
+                                  ->where('fra_reservation.branch_id', '=', $branch)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->paginate(10);
+      }
+      else
+      {
+        $allCancel = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('status', '=', 2)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->paginate(10);
+      }
+
+      return view('back.pages.reservation.cancel', compact('allCancel'));
     }
 }

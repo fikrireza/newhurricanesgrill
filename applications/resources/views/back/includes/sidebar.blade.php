@@ -46,7 +46,7 @@
       </a>
       <ul class="treeview-menu">
         <li><a href="{{ route('reservation') }}"><i class="fa fa-circle-o"></i> Reservation List</a></li>
-        <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Reservation Cancelled</a></li>
+        <li><a href="{{ route('reservation.cancel') }}"><i class="fa fa-circle-o"></i> Reservation Cancelled</a></li>
         <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Reservation Block</a></li>
         <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Group Booking Payment</a></li>
         <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Reservation Report</a></li>
