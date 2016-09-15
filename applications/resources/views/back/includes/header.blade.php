@@ -23,11 +23,21 @@
         <ul class="dropdown-menu">
           <!-- User image -->
           <li class="user-header">
-            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+            <img src="{{ url('/') }}/images/{{Auth::user()->avatar}}" class="img-circle" alt="User Image">
             <p>
               {{ Auth::user()->name }}
               <small>
-                {{ Auth::user()->level }}
+                @if(Auth::user()->level == 1)
+                  Administrator
+                @elseif(Auth::user()->level == 2)
+                  Manager
+                @elseif(Auth::user()->level == 3)
+                  Reservation
+                @elseif(Auth::user()->level == 4)
+                  Reservation Admin
+                @elseif(Auth::user()->level == 5)
+                  Kitchen
+                @endif
               </small>
             </p>
           </li>

@@ -5,10 +5,19 @@
       <img src="{{ url('/') }}/images/{{Auth::user()->avatar}}" class="img-circle" alt="User Image">
     </div>
     <div class="pull-left info">
-      <p>
-        {{ Auth::user()->name }}
-      </p>
+      <p>{{ Auth::user()->name }}</p>
       <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+      <small>@if(Auth::user()->level == 1)
+        Administrator
+      @elseif(Auth::user()->level == 2)
+        Manager
+      @elseif(Auth::user()->level == 3)
+        Reservation
+      @elseif(Auth::user()->level == 4)
+        Reservation Admin
+      @elseif(Auth::user()->level == 5)
+        Kitchen
+      @endif</small>
     </div>
   </div>
   <ul class="sidebar-menu">
