@@ -148,7 +148,7 @@
               <tr style="background:#F96">
               @endif
                 <td>{{ $reservation_time['booking_code'] }}</td>
-                <td>{{ $reservation_time['reserve_date'] }}</td>
+                <td>{{date("d-M-Y",strtotime($reservation_time['reserve_date']))}}</td>
                 <td>{{ $reservation_time['reserve_time'] }}</td>
                 <td>{{ $reservation_time['branch_name'] }}</td>
                 <td>{{ $reservation_time['name'] }}</td>
@@ -165,19 +165,28 @@
                 <td>
                   @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 3 || Auth::user()->level == 4)
                   <span data-toggle="tooltip" title="Edit Reservation">
-                    <a href="{{ url('hurricanesmenu/reservation-bind') }}{{'/'.$reservation_time['id']}}" class="btn btn-warning btn-flat btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-edit"></i></a>
+                    <a href="{{ url('hurricanesmenu/reservation-bind') }}{{'/'.$reservation_time['id']}}" class="btn bg-blue btn-block btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-edit"></i></a>
                   </span>&nbsp;
+                  @if($reservation_time['status'] == 0)
                   <span data-toggle="tooltip" title="Cancel Reservation">
-                    <a href="{{ url('hurricanesmenu/reservation-cancel') }}{{'/'.$reservation_time['id']}}" class="btn btn-danger btn-flat btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-ban"></i></a>
+                    <a href="{{ url('hurricanesmenu/reservation-cancelled') }}{{'/'.$reservation_time['id']}}" class="btn bg-red btn-block btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-ban"></i></a>
                   </span>&nbsp;
                   <span data-toggle="tooltip" title="Accept Reservation">
-                    <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$reservation_time['id']}}" class="btn btn-success btn-flat btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-check"></i></a>
+                    <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$reservation_time['id']}}" class="btn bg-olive btn-block btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-check"></i></a>
                   </span>
+                  @else
+                  <span data-toggle="tooltip" title="Cancel Reservation">
+                    <a href="{{ url('hurricanesmenu/reservation-cancelled') }}{{'/'.$reservation_time['id']}}" class="btn bg-red btn-block btn-xs disabled" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-ban"></i></a>
+                  </span>&nbsp;
+                  <span data-toggle="tooltip" title="Accept Reservation">
+                    <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$reservation_time['id']}}" class="btn bg-olive btn-block btn-xs disabled" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-check"></i></a>
+                  </span>&nbsp;
+                  @endif
                   @endif
                   @if($reservation_time['size'] > 9)
                     @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 4)
                   <span data-toggle="tooltip" title="Confirm Reservation">
-                    <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$reservation_time['id']}}" class="btn btn-default btn-flat btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-check-square-o"></i></a>
+                    <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$reservation_time['id']}}" class="btn bg-green btn-block btn-xs" data-value="{{ $reservation_time['id'] }}"><i class="fa fa-check-square-o"></i></a>
                   </span>
                     @endif
                   @endif</td>
@@ -215,14 +224,6 @@
 <script>
   $(function () {
     $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    });
   });
 </script>
 <script type="text/javascript">

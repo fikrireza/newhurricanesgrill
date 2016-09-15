@@ -38,7 +38,7 @@
     <tr>
       <td>Party Size</td>
       <td>:</td>
-      <td>{{ $data[0]['size'] }}</td>
+      <td>{{ $data[0]['size'] }} pax</td>
     </tr>
     <tr>
       <td>Email</td>
@@ -70,12 +70,9 @@
   </p>
   <p align="left">
     <font color="#000000" style="font-size:14px">
-    Our Location : <br>
-    Gunawarman #20 Kebayoran Baru Jakarta 12110<br />
-    <br />
     Please arrive at least 10 minutes in advance of the scheduled reservation time. The restaurant reserves the right to cancel your booking and allocate your table to other guests if you have not arrived within 15 minutes of the scheduled seating time.
     </font>
   </p>
   </div>
   </body>
-</html>';
+</html>

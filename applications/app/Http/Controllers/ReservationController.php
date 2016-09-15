@@ -160,7 +160,7 @@ class ReservationController extends Controller
         if($request->email != null)
         {
           Mail::send('email.bookinggroup', ['data' => $data, 'branch' => $branch], function($message) {
-            $message->to(Input::get('email'), Input::get('email'))->subject('Group Booking for Hurricane’s Grill Indonesia');
+            $message->to($request->email)->to('contact@hurricanesgrill.co.id')->subject('Group Booking for Hurricane’s Grill Indonesia');
           });
         }
 
@@ -200,7 +200,7 @@ class ReservationController extends Controller
         if($request->email != null)
         {
           Mail::send('email.booking', ['data' => $data, 'branch' => $branch], function($message) {
-            $message->to(Input::get('email'), Input::get('email'))->subject('Booking Confirmation for Hurricane’s Grill Indonesia');
+            $message->to($request->email)->to('contact@hurricanesgrill.co.id')->subject('Booking Confirmation for Hurricane’s Grill Indonesia');
           });
         }
 
@@ -266,8 +266,74 @@ class ReservationController extends Controller
 
     public function accept($id)
     {
+      $user = Auth()->user()->id;
+
       $accept = Reservation::find($id);
-      dd($accept);
+
+      $accept->status   = 5;
+      $accept->user_id  = $user;
+      $accept->save();
+
+      $dates = date("Y-M-d",strtotime($accept->reserve_date));
+
+      $branch = DB::table('fra_branch')->where('id', $accept->branch_id)->first();
+
+      $email = $accept->email;
+
+      if($accept->size > 9)
+      {
+        $totalpay = $accept->size*100000;
+
+        $data = array([
+          'booking_code'  => $accept->booking_code,
+          'branch_name'   => $branch->name,
+          'name'          => $accept->name,
+          'handphone'     => $accept->handphone,
+          'size'          => $accept->size,
+          'email'         => $accept->email,
+          'reserve_date'  => $dates,
+          'reserve_time'  => $accept->reserve_time,
+          'specialreq'    => $accept->specialreq,
+          'totalpay'      => $totalpay
+          ]);
+
+        $branch = array($branch);
+
+        if($email != null)
+        {
+          Mail::send('email.bookinggroup', ['data' => $data, 'branch' => $branch], function($message) use($email) {
+            $message->to($email)->to('contact@hurricanesgrill.co.id')->subject('Group Booking for Hurricane’s Grill Indonesia');
+          });
+        }
+
+        return redirect()->route('reservation')->with('message', 'Reservation Has Been Accepted and Email Confirmation Has Been Sent.');
+      }
+      else
+      {
+        $data = array([
+          'booking_code'  => $accept->booking_code,
+          'branch_name'   => $branch->name,
+          'name'          => $accept->name,
+          'handphone'     => $accept->handphone,
+          'size'          => $accept->size,
+          'email'         => $accept->email,
+          'reserve_date'  => $dates,
+          'reserve_time'  => $accept->reserve_time,
+          'specialreq'    => $accept->specialreq
+          ]);
+
+        $branch = array($branch);
+
+        if($email != null)
+        {
+          Mail::send('email.booking', ['data' => $data, 'branch' => $branch], function($message) use($email) {
+            $message->to($email)->to('contact@hurricanesgrill.co.id')->subject('Booking Confirmation for Hurricane’s Grill Indonesia');
+          });
+        }
+
+        return redirect()->route('reservation')->with('message', 'New Reservation Has Been Created and Email Confirmation Has Been Sent.');
+
+      }
     }
 
     public function cancel()

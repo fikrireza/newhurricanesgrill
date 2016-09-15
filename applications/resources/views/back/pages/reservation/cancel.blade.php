@@ -50,7 +50,7 @@
             @foreach($allCancel as $key)
             <tr>
               <td>{{ $key->booking_code  }}</td>
-              <td>{{ $key->reserve_date  }}</td>
+              <td>{{date("d-M-Y",strtotime($key->reserve_date))}}</td>
               <td>{{ $key->reserve_time  }}</td>
               <td>{{ $key->branch_name  }}</td>
               <td>{{ $key->name  }}</td>
@@ -61,7 +61,7 @@
               <td>{{ $key->username  }}</td>
               <td>@if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 3 || Auth::user()->level == 4)
               <span data-toggle="tooltip" title="Edit Reservation">
-                <a href="{{ url('hurricanesmenu/reservation-bind') }}{{'/'.$key->id }}" class="btn btn-warning btn-flat btn-xs" data-value="{{ $key->id }}"><i class="fa fa-edit"></i></a>
+                <a href="{{ url('hurricanesmenu/reservation-bind') }}{{'/'.$key->id }}" class="btn bg-blue btn-block btn-xs" data-value="{{ $key->id }}"><i class="fa fa-edit"></i></a>
               </span>&nbsp;@endif
               @if($key->size > 9)
                 @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 3 || Auth::user()->level == 4)
@@ -91,14 +91,6 @@
 <script>
   $(function () {
     $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    });
   });
 </script>
 <script type="text/javascript">

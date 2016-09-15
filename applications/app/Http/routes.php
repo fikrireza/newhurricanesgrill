@@ -54,7 +54,7 @@ Route::get('hurricanesmenu/reservation-cancelled/{id}', 'ReservationController@c
 Route::get('hurricanesmenu/reservation-cancel', 'ReservationController@cancel')->name('reservation.cancel');
 Route::get('hurricanesmenu/reservation-accept/{id}', 'ReservationController@accept')->name('reservation.accept');
 
-Route::get('hurricanesmenu/payment-confirm/', 'ReservationController@payment')->name('reservation.payment');
+Route::get('payment-confirm/{booking_code}', 'ReservationController@paymentconfirm')->name('reservation.payment');
 
 // Authentication //
 Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');

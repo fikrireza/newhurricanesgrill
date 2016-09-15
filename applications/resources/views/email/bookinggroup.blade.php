@@ -38,7 +38,7 @@
     <tr>
       <td>Party Size</td>
       <td>:</td>
-      <td>{{ $data[0]['size'] }}</td>
+      <td>{{ $data[0]['size'] }} pax</td>
     </tr>
     <tr>
       <td>Email</td>
@@ -103,18 +103,13 @@
   </table>
 
   <strong>After you make payment, please kindly confirm your payment by clicking this
-    <a href="{{ URL::to('hurricanesmenu/payment-confirm//' . $data[0]['booking_code']) }}" >link</a>. </strong>
+    <a href="{{ URL::to('/payment-confirm//' . $data[0]['booking_code']) }}" >link</a>. </strong>
     <br />
     <br />
     For more information, Please Call : <a href="tel:+622127513388">+6221 2751 3388</a> (Hurricanes Grill Indonesia)
     <br />
     <br />
     Thank you and we are looking forward to serve you,
-    <br />
-    <br />
-    Hurricane'."'".'s Grill<br />
-    Gunawarman 20, Kebayoran Baru<br />
-    Jakarta 12110 - Indonesia
     <br />
     <br />
 
