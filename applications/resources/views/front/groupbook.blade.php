@@ -115,23 +115,9 @@
       <br />
       <br />
       <div class="col-md-1"></div>
-      {{-- <div class="col-md-6">
-        <div class="pc_only" style="display:none">
-          <font style="font-size:30px;" face="font1">Reservation Online</font>
-          <font style="font-size:20px;" face="font1">
-            <p>
-              <a href="tel:+622127513388" style="color:#000;text-decoration:none"> +6221 2751 3388 </a>|
-              <a href="tel:+622127513399" style="color:#000;text-decoration:none">+6221 2751 3399 </a>
-            </p>
-            <p>
-              <a href="tel:+622127513399" style="color:#000;text-decoration:none"> Hotline : +62812 9002 5555 </a>
-            </p>
-          </font>
-        </div>
-      </div> --}}
       <div class="col-md-4">
         <div style="padding-left:15px">
-          <font style="font-size:25px;" face="font1">RESERVATION ONLINE</font>
+          <font style="font-size:25px;" face="font1">GROUP BOOKING</font>
           <font style="font-size:16px;" face="font1">
             <p>
               <a href="tel:+622127513388" style="color:#000;text-decoration:none"> +6221 2751 3388 </a>|
@@ -149,9 +135,9 @@
       <div class="col-md-1"></div>
       <div class="col-md-4" style="font-family:font2">
         <br />
-        <p align="justify">For group booking ( 10 people or more ), please kindly click this button :</p>
-        <p align="center">
-          <a href="{{ route('groupbook') }}"><button class="btn btn-info groupbook">Group Booking</button></a>
+        {{-- <p align="left">For group booking ( 10 people or more ), please kindly click this button :</p> --}}
+        <p align="left">
+          <a href="{{ route('groupbook') }}"><button class="btn btn-info groupbook">Back</button></a>
         </p>
 
         <form class="form-horizontal" method="post" action="{{ route('web.store') }}">
@@ -208,17 +194,7 @@
               <label class="col-sm-3 control-label">Party Size</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('size') ? 'has-error' : '' }}">
-              <select name="size" class="form-control" >
-                <option value="1" {{ old('size') == '1' ? 'selected' : '' }}>1 pax</option>
-                <option value="2" {{ old('size') == '2' ? 'selected' : '' }}>2 pax</option>
-                <option value="3" {{ old('size') == '3' ? 'selected' : '' }}>3 pax</option>
-                <option value="4" {{ old('size') == '4' ? 'selected' : '' }}>4 pax</option>
-                <option value="5" {{ old('size') == '5' ? 'selected' : '' }}>5 pax</option>
-                <option value="6" {{ old('size') == '6' ? 'selected' : '' }}>6 pax</option>
-                <option value="7" {{ old('size') == '7' ? 'selected' : '' }}>7 pax</option>
-                <option value="8" {{ old('size') == '8' ? 'selected' : '' }}>8 pax</option>
-                <option value="9" {{ old('size') == '9' ? 'selected' : '' }}>9 pax</option>
-              </select>
+              <input type="number" class="form-control" name="size" placeholder="Ex: 10" min="10" value="{{ old('size')}}">
               @if($errors->has('size'))
                 <span class="help-block">
                   <i>* {{$errors->first('size')}}</i>

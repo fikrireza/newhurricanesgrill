@@ -25,6 +25,13 @@ class WebReservationController extends Controller
       return view('front.reservation', compact('getBranch'));
     }
 
+    public function groupbook()
+    {
+      $getBranch = Branch::where('flag_active', '=', 1)->get();
+
+      return view('front.groupbook', compact('getBranch'));
+    }
+
     public function store(Request $request)
     {
       // dd($request);
@@ -92,15 +99,15 @@ class WebReservationController extends Controller
 
       // Cek By Time
   		$maxcap2=0;
-  		if($time == "11:00:00" || $time == "11:30:00" || $time == "14:00:00" || $time == "14:30:00" || $time == "15:00:00" || $time == "15:30:00" || $time == "16:00:00" || $time == "16:30:00" || $time=="17:00:00" ||  $time == "17:30:00" || $time=="18:00:00" || $time == "21:00:00")
+  		if($time == "11:00:00" || $time == "14:00:00" || $time == "15:00:00" || $time == "16:00:00" || $time=="17:00:00" || $time=="18:00:00" || $time == "21:00:00")
   		{
   			$maxcap2=100;
   		}
-  		if($time == "13:00:00" || $time == "13:30:00" ||  $time == "20:00:00" || $time == "20:30:00")
+  		if($time == "13:00:00" || $time == "20:00:00")
   		{
   			$maxcap2=80;
   		}
-  		if($time == "12:00:00" || $time == "12:30:00" || $time == "19:00:00" || $time == "19:30:00")
+  		if($time == "12:00:00" || $time == "19:00:00")
   		{
   			$maxcap2=120;
   		}
@@ -112,15 +119,29 @@ class WebReservationController extends Controller
 				{
 					if($salah == 0)
 					{
-					return redirect()->route('web.reservation')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
-					$salah=1;
+            if($person>9)
+            {
+              return redirect()->route('groupbook')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            }
+            else
+            {
+              return redirect()->route('web.reservation')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            }
+					  $salah=1;
 					}
 				}
 				if($cap1>160 || $cap2>160)
 				{
 					if($salah==0)
 					{
-          return redirect()->route('web.reservation')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            if($person>9)
+            {
+              return redirect()->route('groupbook')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            }
+            else
+            {
+              return redirect()->route('web.reservation')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            }
 					$salah=1;
 					}
 				}
@@ -131,7 +152,14 @@ class WebReservationController extends Controller
 				{
 					if($salah == 0)
 					{
-          return redirect()->route('web.reservation')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            if($person>9)
+            {
+              return redirect()->route('groupbook')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            }
+            else
+            {
+              return redirect()->route('web.reservation')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            }
 					$salah=1;
 					}
 				}
@@ -140,7 +168,14 @@ class WebReservationController extends Controller
 				{
 					if($salah==0)
 					{
-          return redirect()->route('web.reservation')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            if($person>9)
+            {
+              return redirect()->route('groupbook')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            }
+            else
+            {
+              return redirect()->route('web.reservation')->with('message', 'Reservation is full on '.$dates.' at '.$time.'')->withInput();
+            }
           $salah=1;
 					}
 				}
@@ -155,7 +190,14 @@ class WebReservationController extends Controller
                     ->get();
 
         if ($block != null) {
-          return redirect()->route('web.reservation')->with('message', $block[0]->notification)->withInput();
+          if($person>9)
+          {
+            return redirect()->route('groupbook')->with('message', $block[0]->notification)->withInput();
+          }
+          else
+          {
+            return redirect()->route('web.reservation')->with('message', $block[0]->notification)->withInput();
+          }
         }
 			}
 
@@ -215,11 +257,18 @@ class WebReservationController extends Controller
           if($email != null)
           {
             Mail::send('email.webbookinggroup', ['data' => $data, 'branch' => $branch], function($message) use($email) {
-              $message->to($email)->to('contact@hurricanesgrill.co.id')->subject('Group Booking Request for Hurricane’s Grill Indonesia');
+              $message->to($email)->to('contact@hurricanesgrill.co.id')->subject('Group Booking Request for Hurricanes Grill Indonesia');
             });
           }
 
-          return redirect()->route('web.reservation')->with('success', 'Thank you for reservation');
+          if($request->size > 9)
+          {
+            return redirect()->route('groupbook')->with('success', 'Thank you for reservation');
+          }
+          else
+          {
+            return redirect()->route('web.reservation')->with('success', 'Thank you for reservation');
+          }
 
         }
         else
@@ -256,11 +305,18 @@ class WebReservationController extends Controller
           if($email != null)
           {
             Mail::send('email.webbooking', ['data' => $data, 'branch' => $branch], function($message) use($email) {
-              $message->to($email)->to('contact@hurricanesgrill.co.id')->subject('Reservation for Hurricane’s Grill Indonesia');
+              $message->to($email)->to('contact@hurricanesgrill.co.id')->subject('Reservation for Hurricanes Grill Indonesia');
             });
           }
 
-          return redirect()->route('web.reservation')->with('success', 'Thank you for reservation');
+          if($request->size > 9)
+          {
+            return redirect()->route('groupbook')->with('success', 'Thank you for reservation');
+          }
+          else
+          {
+            return redirect()->route('web.reservation')->with('success', 'Thank you for reservation');
+          }
         }
       }
     }
