@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('front/index');
 });
 
+Route::get('reservation', 'WebReservationController@index')->name('web.reservation');
+Route::get('reservation-group', 'WebReservationController@groupbook')->name('groupbook');
+Route::post('reservation', 'WebReservationController@store')->name('web.store');
+
+
 Route::get('/hurricanesmenu', 'Auth\AuthController@index')->name('index');
 
 Route::get('hurricanesmenu/dashboard', 'DashboardController@index')->name('dashboard');
