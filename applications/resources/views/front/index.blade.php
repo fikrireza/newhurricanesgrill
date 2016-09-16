@@ -14,7 +14,8 @@
 
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
-<link href='http://fonts.googleapis.com/css?family=Philosopher:400,700,400italic,700italic|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'><script src="js/jquery-1.11.1.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Philosopher:400,700,400italic,700italic|PT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+<script src="js/jquery-1.11.1.min.js"></script>
 <script src="front/js/bootstrap.js"> </script>
 <script src="front/js/modernizr.custom.js"></script>
 <script type="text/javascript" src="front/js/move-top.js"></script>
@@ -304,7 +305,7 @@ Hotline : <a href="tel:+6281290025555" style="color:#FFF">+6281290025555</a>
 <br>
 
 
-							<input type="submit" style="padding:15px 40px;font-size:25px" value="Reserve Now" onClick="window.open('page/reservation.php', 'newwindow', 'width=300,height=600,scrollbars=yes');">
+							<input type="submit" style="padding:15px 40px;font-size:25px" value="Reserve Now" onClick="window.open('reservation', 'newwindow', 'width=300,height=600,scrollbars=yes');">
 						</div>
                         <br>
 
