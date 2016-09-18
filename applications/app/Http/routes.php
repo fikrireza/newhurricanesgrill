@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::get('reservation', 'WebReservationController@index')->name('web.reservation');
 Route::get('reservation-group', 'WebReservationController@groupbook')->name('groupbook');
 Route::post('reservation', 'WebReservationController@store')->name('web.store');
+Route::get('payment-confirm/{booking_code}', 'ReservationController@paymentconfirm')->name('reservation.payment');
 
 
 Route::get('/hurricanesmenu', 'Auth\AuthController@index')->name('index');
@@ -58,8 +59,7 @@ Route::post('hurricanesmenu/reservation-update', 'ReservationController@update')
 Route::get('hurricanesmenu/reservation-cancelled/{id}', 'ReservationController@cancelled')->name('reservation.cancelled');
 Route::get('hurricanesmenu/reservation-cancel', 'ReservationController@cancel')->name('reservation.cancel');
 Route::get('hurricanesmenu/reservation-accept/{id}', 'ReservationController@accept')->name('reservation.accept');
-
-Route::get('payment-confirm/{booking_code}', 'ReservationController@paymentconfirm')->name('reservation.payment');
+Route::post('hurricanesmenu/reservation-search/', 'ReservationController@search')->name('reservation.search');
 
 // Authentication //
 Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');

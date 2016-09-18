@@ -70,7 +70,8 @@
             <p>Search Reservation</p>
           </div>
         </div>
-        <form action="" method="POST">
+        <form action="{{ route('reservation.search') }}" method="POST">
+        {{ csrf_field() }}
         <div class="box-body">
           <div class="row">
             <div class="col-xs-3">

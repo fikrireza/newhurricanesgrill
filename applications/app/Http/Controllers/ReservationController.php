@@ -362,4 +362,73 @@ class ReservationController extends Controller
 
       return view('back.pages.reservation.cancel', compact('allCancel'));
     }
+
+    public function search(Request $request)
+    {
+      $booking_code = $request->booking_code;
+      $reserve_date = $request->reserve_date;
+
+      if($request->season == 'lunch')
+      {
+        $season = 'lunch';
+      }
+      elseif($request->season == 'dinner')
+      {
+        $season = 'dinner';
+      }
+      else
+      {
+        $season = 'All';
+      }
+
+      $branch_id = $request->branch_id;
+
+      $today = date('Y-m-d');
+      $branch = Auth::user()->branch_id;
+
+      if($branch != null)
+      {
+        $getBranch = Branch::where('id', $branch)->get();
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('reserve_date', '=', $today)
+                                  ->where('fra_branch.id', '=', $branch)
+                                  ->where('status', '!=', 2)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('branch_id', '=', $branch)
+                          ->where('status', '!=', 2)
+                          ->where('reserve_date', '=', $today)
+                          ->get();
+      }
+      else
+      {
+        $getBranch = Branch::get();
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('reserve_date', '=', $today)
+                                  ->where('status', '!=', 2)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('reserve_date', '=', $today)
+                          ->where('status', '!=', 2)
+                          ->get();
+      }
+
+      return view('back.pages.reservation.search', compact('booking_code', 'reserve_date', 'season', 'branch_id', 'allReservation', 'search', 'getSize', 'getBranch'));
+    }
 }
