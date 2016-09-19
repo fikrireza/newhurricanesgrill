@@ -186,6 +186,7 @@ class WebReservationController extends Controller
         $block = DB::table('fra_blockreservation')
                     ->join('fra_blockreservationdetail', 'fra_blockreservationdetail.blockreservation_id', '=', 'fra_blockreservation.id')
                     ->where('fra_blockreservation.branch_id', '=', $branch)
+                    ->where('fra_blockreservation.block_date', '=', $dates)
                     ->where('fra_blockreservationdetail.times', '=', $time)
                     ->get();
 
