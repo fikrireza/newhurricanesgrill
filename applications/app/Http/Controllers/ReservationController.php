@@ -10,6 +10,8 @@ use App\Http\Requests;
 use App\Models\User;
 use App\Models\Branch;
 use App\Models\Reservation;
+use App\Models\BlockReservation;
+use App\Models\BlockReservationDetail;
 use DB;
 use Mail;
 use Auth;
@@ -410,5 +412,45 @@ class ReservationController extends Controller
       }
 
       return view('back.pages.reservation.search', compact('setBooking_code', 'setReserve_date', 'setSeason', 'setBranch_id', 'allReservation', 'search', 'getSize', 'getBranch'));
+    }
+
+
+    public function block()
+    {
+      $getBranch = Branch::get();
+      $getReservationBlock  = BlockReservation::join('fra_branch', 'fra_branch.id', '=', 'fra_blockreservation.branch_id')
+                                              ->join('fra_users', 'fra_users.id', '=', 'fra_blockreservation.user_id')
+                                              ->select('fra_blockreservation.*', 'fra_branch.name as name', 'fra_users.name as username')
+                                              ->get();
+      $getReservationBlockDetail = BlockReservationDetail::join('fra_blockreservation', 'fra_blockreservation.id', '=', 'fra_blockreservationdetail.blockreservation_id')->get();
+
+      return view('back.pages.reservation.block', compact('getBranch', 'getReservationBlock', 'getReservationBlockDetail'));
+    }
+
+    public function blockreservation(Request $request)
+    {
+      // dd($request);
+      $user = Auth::user()->id;
+
+      DB::transaction(function() use($request){
+        $block = BlockReservation::create([
+          'branch_id' => $request->branch_id,
+          'block_date'  =>  date("Y-m-d",strtotime($request->block_date)),
+          'notification'  => $request->notification,
+          'user_id' => $request->user_id
+        ]);
+
+        $blockDetails = $request->blockreservationdetail;
+      	if($blockDetails != ""){
+        	foreach($blockDetails as $blockDetail){
+        	$isiblockDetail = new BlockReservationDetail;
+        	$isiblockDetail->times = $blockDetail['times'];
+          $isiblockDetail->blockreservation_id = $block->id;
+        	$isiblockDetail->save();
+        	}
+      	}
+      });
+
+      return redirect()->route('reservation.block')->with('message', 'Reservation Date Has Been Blocked');
     }
 }

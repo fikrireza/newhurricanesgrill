@@ -16,7 +16,6 @@
 
 @section('content')
   <div class="row">
-
     <div class="col-md-12">
       @if(Session::has('message'))
         <div class="alert alert-success">
