@@ -9,6 +9,7 @@ use App\Models\Branch;
 use App\Models\Reservation;
 use App\Models\BlockReservation;
 use App\Models\BlockReservationDetail;
+use App\Models\ConfirmPayment;
 use Mail;
 use DB;
 use Validator;
@@ -17,6 +18,11 @@ use DateTime;
 
 class WebReservationController extends Controller
 {
+
+    public function home()
+    {
+      return view('front.index');
+    }
 
     public function index()
     {
@@ -347,5 +353,82 @@ class WebReservationController extends Controller
           }
         }
       }
+    }
+
+    public function confirmpayment($booking_code)
+    {
+      $booking_code = Reservation::select('id', 'booking_code')
+                                  ->where('booking_code', $booking_code)
+                                  ->get();
+
+      $confirmed = ConfirmPayment::where('reservation_id', $booking_code[0]->id)->get();
+
+      if($booking_code->isEmpty())
+      {
+        return redirect()->route('index')->with('error', 'Your Reservation Code is Expired or Has Been Confirmed');
+      }
+      else
+      {
+        if($confirmed->isEmpty())
+        {
+          return view('front.confirmpayment', compact('booking_code'));
+        }
+        else
+        {
+          return redirect()->route('index')->with('message', 'Your Reservation Has Been Confirmed');
+        }
+      }
+    }
+
+    public function confirm(Request $request)
+    {
+      $message = [
+        'date_payment.required' => 'Fill This Field',
+        'acc_no.required' => 'Fill This Field',
+        'acc_name.required' => 'Fill This Field',
+        'total_payment.required'  => 'Fill This Field',
+      ];
+
+      $validator = Validator::make($request->all(), [
+        'date_payment'  => 'required',
+        'acc_no'  => 'required',
+        'acc_name'  => 'required',
+        'total_payment' => 'required'
+      ], $message);
+
+      if($validator->fails()){
+        return redirect()->route('web.confirmpayment', ['booking_code' => $request->booking_code])->withErrors($validator)->withInput();
+      }
+
+
+      if($request->hasFile('paymentimg'))
+      {
+        $file = $request->file('paymentimg');
+        $photo_name = time().'-'.$file->getClientOriginalName();
+        $file->move('documents', $photo_name);
+        $confirm = ConfirmPayment::create([
+                    'date_payment'  => date('Y-m-d', strtotime($request->date_payment)),
+                    'acc_no'  => $request->acc_no,
+                    'acc_name'  => $request->acc_name,
+                    'total_payment' => $request->total_payment,
+                    'paymentimg'   => $photo_name,
+                    'notes' => $request->notes,
+                    'reservation_id'  => $request->reservation_id,
+                  ]);
+      }
+      else
+      {
+        $confirm = ConfirmPayment::create([
+                    'date_payment'  => date('Y-m-d', strtotime($request->date_payment)),
+                    'acc_no'  => $request->acc_no,
+                    'acc_name'  => $request->acc_name,
+                    'total_payment' => $request->total_payment,
+                    'notes' => $request->notes,
+                    'reservation_id'  => $request->reservation_id,
+                  ]);
+      }
+
+      return redirect()->route('index')->with('success', 'Your Confirmation Has Been Accepted');
+
     }
 }

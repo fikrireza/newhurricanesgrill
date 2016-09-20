@@ -11,14 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('front/index');
-});
+Route::get('/', 'WebReservationController@home')->name('index');
 
 Route::get('reservation', 'WebReservationController@index')->name('web.reservation');
 Route::get('reservation-group', 'WebReservationController@groupbook')->name('groupbook');
 Route::post('reservation', 'WebReservationController@store')->name('web.store');
-Route::get('payment-confirm/{booking_code}', 'ReservationController@paymentconfirm')->name('reservation.payment');
+Route::get('payment-confirm/{booking_code}', 'WebReservationController@confirmpayment')->name('web.confirmpayment');
+Route::post('payment-confirm', 'WebReservationController@confirm')->name('web.confirm');
 
 
 Route::get('/hurricanesmenu', 'Auth\AuthController@index')->name('index');
