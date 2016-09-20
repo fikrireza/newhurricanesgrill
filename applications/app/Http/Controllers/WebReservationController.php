@@ -187,10 +187,37 @@ class WebReservationController extends Controller
                     ->join('fra_blockreservationdetail', 'fra_blockreservationdetail.blockreservation_id', '=', 'fra_blockreservation.id')
                     ->where('fra_blockreservation.branch_id', '=', $branch)
                     ->where('fra_blockreservation.block_date', '=', $dates)
-                    ->where('fra_blockreservationdetail.times', '=', $time)
                     ->get();
 
-        if ($block != null) {
+        if($block != null){
+          if($block[0]->times == $time){
+            $detailBlock = $block[0]->times;
+          }elseif($block[0]->times1 == $time){
+            $detailBlock = $block[0]->times1;
+          }elseif($block[0]->times2 == $time){
+            $detailBlock = $block[0]->times2;
+          }elseif($block[0]->times3 == $time){
+            $detailBlock = $block[0]->times3;
+          }elseif($block[0]->times4 == $time){
+            $detailBlock = $block[0]->times4;
+          }elseif($block[0]->times5 == $time){
+            $detailBlock = $block[0]->times5;
+          }elseif($block[0]->times6 == $time){
+            $detailBlock = $block[0]->times6;
+          }elseif($block[0]->times7 == $time){
+            $detailBlock = $block[0]->times7;
+          }elseif($block[0]->times8 == $time){
+            $detailBlock = $block[0]->times8;
+          }elseif($block[0]->times9 == $time){
+            $detailBlock = $block[0]->times9;
+          }elseif($block[0]->times10 == $time){
+            $detailBlock = $block[0]->times10;
+          }elseif($block[0]->times11 == $time){
+            $detailBlock = $block[0]->times11;
+          }
+        }
+
+        if ($block != null && $detailBlock != null) {
           if($person>9)
           {
             return redirect()->route('groupbook')->with('message', $block[0]->notification)->withInput();
