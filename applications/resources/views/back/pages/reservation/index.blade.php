@@ -232,7 +232,8 @@
   $(function () {
     //Date picker
     $('#reserve_date').datepicker({
-      autoclose: true
+      autoclose: true,
+      format: 'yyyy-mm-dd',
     });
 
     //Flat red color scheme for iCheck

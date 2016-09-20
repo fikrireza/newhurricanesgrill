@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-md-4">
-      <form class="form-horizontal" method="post" action="{{ route('reservation.blockcreate') }}">
+      <form class="form-horizontal" method="post" action="{{ route('reservation.blockedit') }}">
         {{ csrf_field() }}
       <div class="box box-danger">
         <div class="box-header with-border">
@@ -44,7 +44,7 @@
               <select name="branch_id" class="form-control">
                 <option value="-- Choose --">-- Choose --</option>
                 @foreach($getBranch as $key)
-                  <option value="{{ $key->id }}" {{ old('branch_id') == $key->id ? 'selected' : '' }}>{{ $key->name }}</option>
+                  <option value="{{ $key->id }}" {{ $blockFind[0]->branch_id == $key->id ? 'selected' : '' }}>{{ $key->name }}</option>
                 @endforeach
               </select>
               @if($errors->has('branch_id'))
@@ -59,7 +59,7 @@
               <label class="col-sm-3 control-label">Date</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('block_date') ? 'has-error' : '' }}">
-              <input type="text" name="block_date" class="form-control" id="block_date" value="{{ old('block_date') }}">
+              <input type="text" name="block_date" class="form-control" id="block_date" value="{{ $blockFind[0]->block_date }}">
               @if($errors->has('block_date'))
                 <span class="help-block">
                   <i>* {{$errors->first('block_date')}}</i>
@@ -72,7 +72,7 @@
               <label class="col-sm-3 control-label">Notification</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('notification') ? 'has-error' : '' }}">
-              <input type="text" name="notification" class="form-control" value="{{ old('notification') }}">
+              <input type="text" name="notification" class="form-control" value="{{ $blockFind[0]->notification }}">
               @if($errors->has('notification'))
                 <span class="help-block">
                   <i>* {{$errors->first('notification')}}</i>
@@ -85,24 +85,26 @@
               <label class="col-sm-3 control-label">Times</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('blockreservationdetail') ? 'has-error' : '' }}">
-              <input type="checkbox" class="minimal-red" name="times" value="11:00"/>&nbsp;11:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times1" value="12:00"/>&nbsp;12:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times2" value="13:00"/>&nbsp;13:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times3" value="14:00"/>&nbsp;14:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times4" value="15:00"/>&nbsp;15:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times5" value="16:00"/>&nbsp;16:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times6" value="17:00"/>&nbsp;17:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times7" value="18:00"/>&nbsp;18:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times8" value="19:00"/>&nbsp;19:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times9" value="20:00"/>&nbsp;20:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times10" value="21:00"/>&nbsp;21:00&nbsp;
-              <input type="checkbox" class="minimal-red" name="times11" value="22:00"/>&nbsp;22:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times" {{  $blockFind[0]->times == '11:00:00' ? 'checked' : '' }} value="11:00"/>&nbsp;11:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times1" {{  $blockFind[0]->times1 == '12:00:00' ? 'checked' : '' }} value="12:00"/>&nbsp;12:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times2" {{  $blockFind[0]->times2 == '13:00:00' ? 'checked' : '' }} value="13:00"/>&nbsp;13:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times3" {{  $blockFind[0]->times3 == '14:00:00' ? 'checked' : '' }} value="14:00"/>&nbsp;14:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times4" {{  $blockFind[0]->times4 == '15:00:00' ? 'checked' : '' }} value="15:00"/>&nbsp;15:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times5" {{  $blockFind[0]->times5 == '16:00:00' ? 'checked' : '' }} value="16:00"/>&nbsp;16:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times6" {{  $blockFind[0]->times6 == '17:00:00' ? 'checked' : '' }} value="17:00"/>&nbsp;17:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times7" {{  $blockFind[0]->times7 == '18:00:00' ? 'checked' : '' }} value="18:00"/>&nbsp;18:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times8" {{  $blockFind[0]->times8 == '19:00:00' ? 'checked' : '' }} value="19:00"/>&nbsp;19:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times9" {{  $blockFind[0]->times9 == '20:00:00' ? 'checked' : '' }} value="20:00"/>&nbsp;20:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times10" {{  $blockFind[0]->times10 == '21:00:00' ? 'checked' : '' }} value="21:00"/>&nbsp;21:00&nbsp;
+              <input type="checkbox" class="minimal-red" name="times11" {{  $blockFind[0]->times11 == '22:00:00' ? 'checked' : '' }} value="22:00"/>&nbsp;22:00&nbsp;
               @if($errors->has('blockreservationdetail'))
                 <span class="help-block">
                   <i>* {{$errors->first('blockreservationdetail')}}</i>
                 </span>
               @endif
             </div>
+            <input type="hidden" name="id" class="form-control" value="{{ $blockFind[0]->id }}">
+            <input type="hidden" name="blockreservation_id" class="form-control" value="{{ $blockFind[0]->blockreservation_id }}">
             <input type="hidden" name="user_id" class="form-control" value="{{ Auth::user()->id }}">
           </div>
         </div>
@@ -111,50 +113,6 @@
         </div>
       </div>
       </form>
-    </div>
-
-    <div class="col-md-8">
-      <div class="box box-danger">
-        <div class="box-header with-border">
-          <div class="box-title">
-            All Blocked Reservation
-          </div>
-        </div>
-        <div class="box-body">
-          <table class="table table-hover">
-            <tr class="bg-red">
-              <th>Branch</th>
-              <th>Date</th>
-              <th>Times</th>
-              <th>Notification</th>
-              <th>Creator</th>
-              <th colspan="2">Action</th>
-            </tr>
-            @if($getReservationBlock->isEmpty())
-            <tr>
-              <td colspan="7">Empty Data</td>
-            </tr>
-            @else
-            @foreach($getReservationBlock as $block)
-            <tr>
-              <td>{{ $block->name }}</td>
-              <td>{{ date('Y-M-d', strtotime($block->block_date)) }}</td>
-              <td>{{ $block->times }} {{$block->times1}} {{$block->times2}} {{$block->times3}} {{$block->times4}} {{$block->times5}} {{$block->times6}} {{$block->times7}} {{$block->times8}} {{$block->times9}} {{$block->times10}} {{$block->times11}}</td>
-              <td>{{ $block->notification }}</td>
-              <td>{{ $block->username}}</td>
-              <td><span data-toggle="tooltip" title="Edit">
-                    <a href="{{ url('hurricanesmenu/reservation-blockbind/') }}{{'/'.$block->blockreservation_id}}" class="btn btn-warning btn-flat btn-xs edit"><i class="fa fa-edit"></i></a>
-                  </span>
-                  <span data-toggle="tooltip" title="Delete">
-                    <a href="" class="btn btn-danger btn-flat btn-xs delete" data-toggle="modal" data-target="#myModalDelete" data-value="{{ $block->id }}"><i class="fa fa-trash"></i></a>
-                  </span>
-              </td>
-            </tr>
-            @endforeach
-            @endif
-          </table>
-        </div>
-      </div>
     </div>
   </div>
 @endsection
@@ -177,18 +135,6 @@
     todayHighlight: true,
     autoclose: true
   });
-</script>
 
-<script>
-  window.setTimeout(function() {
-    $(".alert-success").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove();
-    });
-  }, 2000);
-  window.setTimeout(function() {
-    $(".alert-danger").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove();
-    });
-  }, 5000);
 </script>
 @endsection

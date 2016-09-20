@@ -62,6 +62,8 @@ Route::get('hurricanesmenu/reservation-accept/{id}', 'ReservationController@acce
 Route::post('hurricanesmenu/reservation-search/', 'ReservationController@search')->name('reservation.search');
 Route::get('hurricanesmenu/reservation-block', 'ReservationController@block')->name('reservation.block');
 Route::post('hurricanesmenu/reservation-block', 'ReservationController@blockreservation')->name('reservation.blockcreate');
+Route::get('hurricanesmenu/reservation-blockbind/{id}', 'ReservationController@blockbind')->name('reservation.blockbind');
+Route::post('hurricanesmenu/reservation-blockedit', 'ReservationController@blockedit')->name('reservation.blockedit');
 
 // Authentication //
 Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');

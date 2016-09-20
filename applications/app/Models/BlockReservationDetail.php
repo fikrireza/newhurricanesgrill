@@ -18,7 +18,7 @@ class BlockReservationDetail extends Model
    * @var array
    */
   protected $fillable = [
-      'times', 'blockreservation_id'
+      'times', 'times1', 'times2', 'times3', 'times4', 'times5', 'times6', 'times7', 'times8', 'times9', 'times10', 'times11', 'blockreservation_id'
   ];
 
 }
