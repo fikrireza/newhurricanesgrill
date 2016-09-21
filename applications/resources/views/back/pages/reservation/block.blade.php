@@ -136,7 +136,7 @@
             </tr>
             @else
             @foreach($getReservationBlock as $block)
-            <tr>
+            <tr style="font-size:13px;">
               <td>{{ $block->name }}</td>
               <td>{{ date('Y-M-d', strtotime($block->block_date)) }}</td>
               <td>{{ $block->times }} {{$block->times1}} {{$block->times2}} {{$block->times3}} {{$block->times4}} {{$block->times5}} {{$block->times6}} {{$block->times7}} {{$block->times8}} {{$block->times9}} {{$block->times10}} {{$block->times11}}</td>

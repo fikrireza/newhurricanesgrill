@@ -423,7 +423,7 @@ class ReservationController extends Controller
                                               ->join('fra_blockreservationdetail', 'fra_blockreservationdetail.blockreservation_id', '=', 'fra_blockreservation.id')
                                               ->select('fra_blockreservation.block_date', 'fra_blockreservation.notification', 'fra_branch.name as name', 'fra_users.name as username', 'fra_blockreservationdetail.*')
                                               ->get();
-      // dd($getReservationBlock);
+
       $getReservationBlockDetail = BlockReservationDetail::join('fra_blockreservation', 'fra_blockreservation.id', '=', 'fra_blockreservationdetail.blockreservation_id')->get();
 
       return view('back.pages.reservation.block', compact('getBranch', 'getReservationBlock', 'getReservationBlockDetail'));
@@ -432,6 +432,23 @@ class ReservationController extends Controller
     public function blockreservation(Request $request)
     {
       $user = Auth::user()->id;
+
+      $message = [
+        'branch_id.required'  => 'Fill This Field',
+        'block_date.required' => 'Fill This Field',
+        'block_date.unique' => 'This Date Has Been Used',
+        'notification.required' => 'Fill This Field',
+      ];
+
+      $validator = Validator::make($request->all(), [
+        'branch_id' => 'required|not_in:-- Choose --',
+        'block_date'  => 'required|unique:fra_blockreservation',
+        'notification'  => 'required',
+      ], $message);
+
+      if($validator->fails()){
+        return redirect()->route('reservation.block')->withErrors($validator)->withInput();
+      }
 
       DB::transaction(function() use($request){
         $block = BlockReservation::create([
