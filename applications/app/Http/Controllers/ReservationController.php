@@ -12,6 +12,7 @@ use App\Models\Branch;
 use App\Models\Reservation;
 use App\Models\BlockReservation;
 use App\Models\BlockReservationDetail;
+use App\Models\ConfirmPayment;
 use DB;
 use Mail;
 use Auth;
@@ -520,5 +521,32 @@ class ReservationController extends Controller
       });
 
       return redirect()->route('reservation.block')->with('message', 'Reservation Block Has Been Edited');
+    }
+
+    public function payment()
+    {
+
+      $payments = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
+                                ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date')
+                                ->get();
+
+      return view('back.pages.reservation.payment', compact('payments'));
+    }
+
+    public function paymentSearch(Request $request)
+    {
+      $from = $request->from;
+      $to   = $request->to;
+
+      $paymentSearch = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
+                                ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date')
+                                ->whereBetween('fra_confirmpayment.date_payment', [$from, $to])
+                                ->get();
+
+      $payments = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
+                                ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date')
+                                ->get();
+
+      return view('back.pages.reservation.payment', compact('paymentSearch', 'payments', 'from', 'to'));
     }
 }
