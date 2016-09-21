@@ -69,7 +69,12 @@ Route::post('hurricanesmenu/reservation-payment', 'ReservationController@payment
 
 // Menus Management //
 Route::get('hurricanesmenu/menu-management', 'MenuController@index')->name('menu.index');
+Route::post('hurricanesmenu/menu-categorycreate', 'MenuController@categoryCreate')->name('menu.categoryCreate');
+Route::get('hurricanesmenu/menu-categorybind/{id}', 'MenuController@categoryBind');
+Route::post('hurricanesmenu/menu-categoryupdate', 'MenuController@categoryUpdate')->name('menu.categoryUpdate');
+Route::get('hurricanesmenu/menu-categorytrash/{id}', 'MenuController@categoryTrash');
 
+Route::get('hurricanesmenu/menu', 'MenuController@menu')->name('menu.menus');
 
 // Authentication //
 Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');

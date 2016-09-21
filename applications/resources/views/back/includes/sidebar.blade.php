@@ -34,7 +34,8 @@
         <i class="fa fa-angle-left pull-right"></i>
       </a>
       <ul class="treeview-menu">
-        <li {{ Route::currentRouteNamed('menu.index') ? 'active' : '' }}><a href="{{ route('menu.index') }}"><i class="fa fa-circle-o"></i> Menu Management</a></li>
+        <li class="{{ Route::currentRouteNamed('menu.index') ? 'active' : '' }}"><a href="{{ route('menu.index') }}"><i class="fa fa-circle-o"></i> Category</a></li>
+        <li class="{{ Route::currentRouteNamed('menu.menus') ? 'active' : '' }}"><a href="{{ route('menu.menus') }}"><i class="fa fa-circle-o"></i> Menu</a></li>
       </ul>
     </li>
     <li class="treeview {{ Route::currentRouteNamed('reservation.payment') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.block') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.cancel') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.create') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.bind') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.paymentsearch') ? 'active' : '' }}">

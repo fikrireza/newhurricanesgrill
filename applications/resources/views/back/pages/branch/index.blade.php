@@ -150,7 +150,6 @@
                       <i>* {{$errors->first('maps')}}</i>
                     </span>
                   @endif
-                  <input type="hidden" name="user_id" value="0">
                 </div>
               </div>
               <div class="form-group">
