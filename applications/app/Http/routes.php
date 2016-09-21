@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'WebReservationController@home')->name('index');
+Route::get('/', 'WebReservationController@home')->name('home');
 
 Route::get('reservation', 'WebReservationController@index')->name('web.reservation');
 Route::get('reservation-group', 'WebReservationController@groupbook')->name('groupbook');

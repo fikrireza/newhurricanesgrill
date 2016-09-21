@@ -64,7 +64,15 @@ window._fbq.push(['track', '6038199100965', {'value':'1.00','currency':'IDR'}]);
 </head>
 
  <body class="cbp-spmenu-push">
-
+	 @if(Session::has('message'))
+		 <script>alert('{{ Session::get('message')}}');</script>
+	 @endif
+	 @if(Session::has('success'))
+		 <script>alert('{{ Session::get('success')}}');</script>
+	 @endif
+	 @if(Session::has('error'))
+		 <script>alert('{{ Session::get('error')}}');</script>
+	 @endif
 	<button id="showLeftPush" style="position:fixed;top:0;right:0"><img src="front/images/menu-icon.png" alt=""></button>
 
 			<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left" id="cbp-spmenu-s1">

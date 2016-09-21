@@ -357,25 +357,29 @@ class WebReservationController extends Controller
 
     public function confirmpayment($booking_code)
     {
-      $booking_code = Reservation::select('id', 'booking_code')
+      $today  = date('Y-m-d');
+
+      $booking_code = Reservation::select('id', 'booking_code', 'reserve_date')
                                   ->where('booking_code', $booking_code)
+                                  ->where('user_id', '=', 0)
+                                  ->where('reserve_date', '>=', $today)
                                   ->get();
 
-      $confirmed = ConfirmPayment::where('reservation_id', $booking_code[0]->id)->get();
-
+                                  // dd($booking_code);
       if($booking_code->isEmpty())
       {
-        return redirect()->route('index')->with('error', 'Your Reservation Code is Expired or Has Been Confirmed');
+        return redirect()->route('home')->with('error', 'Your Reservation Code is Expired or Has Been Confirmed');
       }
       else
       {
+        $confirmed = ConfirmPayment::where('reservation_id', $booking_code[0]->id)->get();
         if($confirmed->isEmpty())
         {
           return view('front.confirmpayment', compact('booking_code'));
         }
         else
         {
-          return redirect()->route('index')->with('message', 'Your Reservation Has Been Confirmed');
+          return redirect()->route('home')->with('message', 'Your Payment Has Been Confirmed');
         }
       }
     }
@@ -400,6 +404,29 @@ class WebReservationController extends Controller
         return redirect()->route('web.confirmpayment', ['booking_code' => $request->booking_code])->withErrors($validator)->withInput();
       }
 
+      $id = Reservation::select('id', 'email', 'branch_id')->where('booking_code', $request->booking_code)->get();
+      $email = $id[0]->email;
+
+      $branch = DB::table('fra_branch')->where('id', $id[0]->branch_id)->first();
+
+
+      $data = array([
+        'booking_code'  => $request->booking_code,
+        'date_payment'  => date('Y-M-d', strtotime($request->date_payment)),
+        'acc_no'  => $request->acc_no,
+        'acc_name'  => $request->acc_name,
+        'total_payment' => $request->total_payment,
+        'notes' => $request->notes,
+        ]);
+
+      $branch = array($branch);
+
+      if($email != null)
+      {
+        Mail::send('email.confirmpayment', ['data' => $data, 'branch' => $branch], function($message) use($email) {
+          $message->to($email)->to('contact@hurricanesgrill.co.id')->to('rini@normi.co.id')->to('monica@normi.co.id')->subject('Group Booking Payment Confirmation');
+        });
+      }
 
       if($request->hasFile('paymentimg'))
       {
@@ -428,7 +455,7 @@ class WebReservationController extends Controller
                   ]);
       }
 
-      return redirect()->route('index')->with('success', 'Your Confirmation Has Been Accepted');
+      return redirect()->route('home')->with('success', 'Thank You for Your Payment');
 
     }
 }
