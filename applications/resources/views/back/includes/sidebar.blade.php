@@ -27,28 +27,27 @@
         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
       </a>
     </li>
-    <li class="treeview">
+    <li class="treeview {{ Route::currentRouteNamed('menu.index') ? 'active' : '' }}">
       <a href="#">
-        <i class="fa fa-users"></i>
-        <span>Menu 1</span>
+        <i class="fa fa-spoon"></i>
+        <span>Menu Management</span>
         <i class="fa fa-angle-left pull-right"></i>
       </a>
       <ul class="treeview-menu">
-        <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> -----</a></li>
-        <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> -----</a></li>
+        <li {{ Route::currentRouteNamed('menu.index') ? 'active' : '' }}><a href="{{ route('menu.index') }}"><i class="fa fa-circle-o"></i> Menu Management</a></li>
       </ul>
     </li>
-    <li class="treeview">
+    <li class="treeview {{ Route::currentRouteNamed('reservation.payment') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.block') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.cancel') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.create') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.bind') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.paymentsearch') ? 'active' : '' }}">
       <a href="#">
         <i class="fa fa-edit"></i>
         <span>Reservation Management</span>
         <i class="fa fa-angle-left pull-right"></i>
       </a>
       <ul class="treeview-menu">
-        <li><a href="{{ route('reservation') }}"><i class="fa fa-circle-o"></i> Reservation List</a></li>
-        <li><a href="{{ route('reservation.cancel') }}"><i class="fa fa-circle-o"></i> Reservation Cancelled</a></li>
-        <li><a href="{{ route('reservation.block') }}"><i class="fa fa-circle-o"></i> Reservation Block</a></li>
-        <li><a href="{{ route('reservation.payment') }}"><i class="fa fa-circle-o"></i> Group Booking Payment</a></li>
+        <li class="{{ Route::currentRouteNamed('reservation') ? 'active' : '' }}"><a href="{{ route('reservation') }}"><i class="fa fa-circle-o"></i> Reservation List</a></li>
+        <li class="{{ Route::currentRouteNamed('reservation.cancel') ? 'active' : '' }}"><a href="{{ route('reservation.cancel') }}"><i class="fa fa-circle-o"></i> Reservation Cancelled</a></li>
+        <li class="{{ Route::currentRouteNamed('reservation.block') ? 'active' : '' }}"><a href="{{ route('reservation.block') }}"><i class="fa fa-circle-o"></i> Reservation Block</a></li>
+        <li class="{{ Route::currentRouteNamed('reservation.payment') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.paymentsearch') ? 'active' : '' }}"><a href="{{ route('reservation.payment') }}"><i class="fa fa-circle-o"></i> Group Booking Payment</a></li>
         <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Reservation Report</a></li>
       </ul>
     </li>

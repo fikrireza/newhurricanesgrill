@@ -66,6 +66,11 @@ Route::post('hurricanesmenu/reservation-blockedit', 'ReservationController@block
 Route::get('hurricanesmenu/reservation-payment', 'ReservationController@payment')->name('reservation.payment');
 Route::post('hurricanesmenu/reservation-payment', 'ReservationController@paymentSearch')->name('reservation.paymentsearch');
 
+
+// Menus Management //
+Route::get('hurricanesmenu/menu-management', 'MenuController@index')->name('menu.index');
+
+
 // Authentication //
 Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');
 Route::get('hurricanesmenu/logout', 'Auth\AuthController@getLogout')->name('logout');
