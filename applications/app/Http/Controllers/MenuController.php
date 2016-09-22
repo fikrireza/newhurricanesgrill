@@ -17,12 +17,12 @@ class MenuController extends Controller
 {
 
 
-    public function index()
+    public function category()
     {
       $categoryMenus = MenuCategory::where('flag_active', 1)->get();
       $menus  = Menus::get();
 
-      return view('back.pages.menu.index', compact('categoryMenus', 'menus'));
+      return view('back.pages.menu.category', compact('categoryMenus', 'menus'));
     }
 
 
@@ -39,7 +39,7 @@ class MenuController extends Controller
 
       if($validator->fails())
       {
-        return redirect()->route('menu.index')->withErrors($validator)->withInput();
+        return redirect()->route('menu.category')->withErrors($validator)->withInput();
       }
 
       $categoryMenu = new MenuCategory;
@@ -48,7 +48,7 @@ class MenuController extends Controller
       $categoryMenu->flag_active = 1;
       $categoryMenu->save();
 
-      return redirect()->route('menu.index')->with('success','New Category Menu Has Been Created');
+      return redirect()->route('menu.category')->with('success','New Category Menu Has Been Created');
     }
 
     public function categoryBind($id)
@@ -66,7 +66,7 @@ class MenuController extends Controller
       $categoryUpdate->flag_active  = 1;
       $categoryUpdate->save();
 
-      return redirect()->route('menu.index')->with('success','Category Menu Has Been Updated');
+      return redirect()->route('menu.category')->with('success','Category Menu Has Been Updated');
     }
 
     public function categoryTrash($id)
@@ -78,7 +78,7 @@ class MenuController extends Controller
       $trash->user_id = $user;
       $trash->save();
 
-      return redirect()->route('menu.index')->with('success','Category Successfully Removed');
+      return redirect()->route('menu.category')->with('success','Category Successfully Removed');
     }
 
 

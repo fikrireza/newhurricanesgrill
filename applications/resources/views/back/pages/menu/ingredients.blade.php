@@ -10,7 +10,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-    <li><a href="{{ route('menu.index') }}">Menu Management</a></li>
+    <li><a href="{{ route('menu.category') }}">Menu Management</a></li>
     <li class="active">Ingredients List</li>
   </ol>
 @stop
