@@ -128,7 +128,7 @@ class MenuController extends Controller
       $update = Ingredients::find($request->editId);
       $update->name = $request->editName;
       $update->unit = $request->editUnit;
-      $update->user_id  = $request->user_id;
+      $update->user_id  = $request->editUser_id;
       $update->save();
 
       return redirect()->route('menu.ingredients')->with('success', 'Ingredients Has Been Updated');

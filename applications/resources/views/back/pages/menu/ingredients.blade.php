@@ -16,23 +16,6 @@
 @stop
 
 @section('content')
-  <div class="modal fade" id="myModalDeleteIngredients" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Remove Ingredient</h4>
-        </div>
-        <div class="modal-body">
-          <p>Are You Sure to Remove This Ingredient ?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="reset" class="btn btn-default pull-left btn-flat" data-dismiss="modal">No</button>
-          <a class="btn btn-danger btn-flat" id="deleteIngredient">Yes, I'm Sure</a>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="modal fade" id="myModalEditIngredient" role="dialog">
     <div class="modal-dialog" style="width:500px;">
@@ -113,17 +96,6 @@
               <div class="col-sm-8 {{ $errors->has('unit') ? 'has-error' : '' }}">
                 <input type="text" name="unit" class="form-control" placeholder="Ex: ea, gm, ml, slice, pieces" value="{{ old('unit') }}">
                 <span><i>Ex: ea, gm, ml, slice, pieces, to coat, rings, leaves, rashes</i></span>
-                {{-- <select name="ingredientUnit" class="form-control">
-                  <option value="-- Choose --">-- Choose --</option>
-                  <option value="ea">ea</option>
-                  <option value="slice">slice</option>
-                  <option value="ml">ml</option>
-                  <option value="gm">gm</option>
-                  <option value="leaves">leaves</option>
-                  <option value="rings">rings</option>
-                  <option value="pieces">pieces</option>
-                  <option value="tocoat">to coat</option>
-                </select> --}}
                 @if($errors->has('unit'))
                   <span class="help-block">
                     <i>* {{$errors->first('unit')}}</i>
@@ -193,9 +165,6 @@
                 <td>{{ $key->unit }}</td>
                 <td><span data-toggle="tooltip" title="Edit Ingredient">
                   <a href="" class="btn btn-warning btn-flat btn-xs edit" data-toggle="modal" data-target="#myModalEditIngredient" data-value="{{ $key->id }}"><i class="fa fa-edit"> Edit</i></a>
-                </span>
-                <span data-toggle="tooltip" title="Delete Ingredient">
-                  <a href="" class="btn btn-default btn-flat btn-xs trash" data-toggle="modal" data-target="#myModalDeleteIngredient" data-value="{{ $key->id }}"><i class="fa fa-trash"> Trash</i></a>
                 </span></td>
               </tr>
               @endforeach
@@ -228,10 +197,6 @@
   });
 </script>
 <script>
-  $('a.trash').click(function(){
-    var a = $(this).data('value');
-    $('#deleteCategory').attr('href', "{{ url('/') }}/hurricanesmenu/menu-ingredientstrash/"+a);
-  });
 
   $('a.edit').click(function(){
     var a = $(this).data('value');
