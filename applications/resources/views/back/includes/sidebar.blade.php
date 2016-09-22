@@ -27,7 +27,7 @@
         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
       </a>
     </li>
-    <li class="treeview {{ Route::currentRouteNamed('menu.index') ? 'active' : '' }}">
+    <li class="treeview {{ Route::currentRouteNamed('menu.index') ? 'active' : '' }}{{ Route::currentRouteNamed('menu.ingredients') ? 'active' : '' }}">
       <a href="#">
         <i class="fa fa-spoon"></i>
         <span>Menu Management</span>
@@ -36,6 +36,7 @@
       <ul class="treeview-menu">
         <li class="{{ Route::currentRouteNamed('menu.index') ? 'active' : '' }}"><a href="{{ route('menu.index') }}"><i class="fa fa-circle-o"></i> Category</a></li>
         <li class="{{ Route::currentRouteNamed('menu.menus') ? 'active' : '' }}"><a href="{{ route('menu.menus') }}"><i class="fa fa-circle-o"></i> Menu</a></li>
+        <li class="{{ Route::currentRouteNamed('menu.ingredients') ? 'active' : ''}}"><a href="{{ route('menu.ingredients') }}"><i class="fa fa-circle-o"></i> Ingredients</a></li>
       </ul>
     </li>
     <li class="treeview {{ Route::currentRouteNamed('reservation.payment') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.block') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.cancel') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.create') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.bind') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.paymentsearch') ? 'active' : '' }}">

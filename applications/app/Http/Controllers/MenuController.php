@@ -26,7 +26,7 @@ class MenuController extends Controller
     }
 
 
-    public function createCategory(Request $request)
+    public function categoryCreate(Request $request)
     {
       $message = [
         'name.required' => 'Fill This Field',
@@ -80,4 +80,58 @@ class MenuController extends Controller
 
       return redirect()->route('menu.index')->with('success','Category Successfully Removed');
     }
+
+
+    public function ingredients()
+    {
+
+      $ingredients = Ingredients::get();
+
+      return view('back.pages.menu.ingredients', compact('ingredients'));
+    }
+
+    public function ingredientsCreate(Request $request)
+    {
+      $message  = [
+        'name.required' => 'Fill This Field',
+        'name.unique'   => 'The Ingredient Has Already Been Taken',
+        'unit.required' => 'Fill This Field'
+      ];
+
+      $validator = Validator::make($request->all(), [
+        'name'  =>  'required|unique:fra_ingredients',
+        'unit'  =>  'required',
+      ], $message);
+
+      if($validator->fails()){
+        return redirect()->route('menu.ingredients')->withErrors($validator)->withInput();
+      }
+
+      $createIngredients = new Ingredients;
+      $createIngredients->name  = $request->ingredientName;
+      $createIngredients->unit  = $request->ingredientUnit;
+      $createIngredients->user_id = $request->user_id;
+      $createIngredients->save();
+
+      return redirect()->route('menu.ingredients')->with('success', 'New Ingredients Successfully Created');
+    }
+
+    public function ingredientsBind($id)
+    {
+      $ingredients = Ingredients::find($id);
+
+      return $ingredients;
+    }
+
+    public function ingredientsUpdate(Request $request)
+    {
+      $update = Ingredients::find($request->editId);
+      $update->name = $request->editName;
+      $update->unit = $request->editUnit;
+      $update->user_id  = $request->user_id;
+      $update->save();
+
+      return redirect()->route('menu.ingredients')->with('success', 'Ingredients Has Been Updated');
+    }
+
 }

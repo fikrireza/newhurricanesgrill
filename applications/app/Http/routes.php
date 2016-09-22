@@ -76,6 +76,11 @@ Route::get('hurricanesmenu/menu-categorytrash/{id}', 'MenuController@categoryTra
 
 Route::get('hurricanesmenu/menu', 'MenuController@menu')->name('menu.menus');
 
+Route::get('hurricanesmenu/menu-ingredients', 'MenuController@ingredients')->name('menu.ingredients');
+Route::post('hurricanesmenu/menu-ingredientscreate', 'MenuController@ingredientsCreate')->name('menu.ingredientCreate');
+Route::post('hurricanesmenu/menu-ingredientsupdate', 'MenuController@ingredientsUpdate')->name('menu.ingredientUpdate');
+Route::get('hurricanesmenu/menu-ingredientsbind/{id}', 'MenuController@ingredientsBind')->name('menu.ingredientBind');
+
 // Authentication //
 Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');
 Route::get('hurricanesmenu/logout', 'Auth\AuthController@getLogout')->name('logout');
