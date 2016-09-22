@@ -134,4 +134,55 @@ class MenuController extends Controller
       return redirect()->route('menu.ingredients')->with('success', 'Ingredients Has Been Updated');
     }
 
+    public function menus()
+    {
+      $menus  = Menus::join('fra_menucategory', 'fra_menucategory.id', '=', 'fra_menus.menucategory_id')
+                      ->select('fra_menus.*', 'fra_menucategory.name as categoryName')
+                      ->where('fra_menus.flag_active', 1)
+                      ->get();
+
+      $categoryMenus       = MenuCategory::where('flag_active', 1)->get();
+
+      return view('back.pages.menu.menus', compact('menus', 'categoryMenus'));
+    }
+
+    public function menusCreate(Request $request)
+    {
+      $message  = [
+        'name.required' => 'Fill This Field',
+        'name.unique' => 'Ingredient Has Already Been Taken',
+        'menucategory_id.required' => 'Fill This Field'
+      ];
+
+      $validator  = Validator::make($request->all(), [
+        'name'  => 'required|unique:fra_menus',
+        'menucategory_id' => 'required|not_in:-- Choose --'
+      ], $message);
+
+      if($validator->fails()){
+        return redirect()->route('menu.menus')->withErrors($validator)->withInput();
+      }
+
+      $menusCreate = new Menus;
+      $menusCreate->name  = $request->name;
+      $menusCreate->menucategory_id = $request->menucategory_id;
+      $menusCreate->user_id  = $request->user_id;
+      $menusCreate->flag_active = 1;
+      $menusCreate->save();
+
+      return redirect()->route('menu.menus')->with('message', 'New Menu Has Been Created, Please Input the Recipe Then');
+
+    }
+
+    public function menusShow($id)
+    {
+
+      $menus  = Menus::join('fra_menucategory', 'fra_menucategory.id', '=', 'fra_menus.menucategory_id')
+                      ->select('fra_menus.*', 'fra_menucategory.name as category')
+                      ->where('fra_menus.id', $id)
+                      ->get();
+
+      return view('back.pages.menu.menusshow', compact('menus'));
+    }
+
 }

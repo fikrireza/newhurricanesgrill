@@ -74,12 +74,17 @@ Route::get('hurricanesmenu/menu-categorybind/{id}', 'MenuController@categoryBind
 Route::post('hurricanesmenu/menu-categoryupdate', 'MenuController@categoryUpdate')->name('menu.categoryUpdate');
 Route::get('hurricanesmenu/menu-categorytrash/{id}', 'MenuController@categoryTrash');
 
-Route::get('hurricanesmenu/menu', 'MenuController@menu')->name('menu.menus');
-
 Route::get('hurricanesmenu/menu-ingredients', 'MenuController@ingredients')->name('menu.ingredients');
 Route::post('hurricanesmenu/menu-ingredientscreate', 'MenuController@ingredientsCreate')->name('menu.ingredientCreate');
 Route::post('hurricanesmenu/menu-ingredientsupdate', 'MenuController@ingredientsUpdate')->name('menu.ingredientUpdate');
 Route::get('hurricanesmenu/menu-ingredientsbind/{id}', 'MenuController@ingredientsBind');
+
+Route::get('hurricanesmenu/menu-menus', 'MenuController@menus')->name('menu.menus');
+Route::post('hurricanesmenu/menu-menuscreate', 'MenuController@menusCreate')->name('menu.menuCreate');
+Route::get('hurricanesmenu/menu-menusbind/{id}', 'MenuController@menusBind');
+Route::post('hurricanesmenu/menu-menusupdate', 'MenuController@menuUpdate')->name('menu.menuUpdate');
+Route::get('hurricanesmenu/menu-menus/show/{id}', 'MenuController@menusShow')->name('menu.menusShow');
+
 
 // Authentication //
 Route::post('hurricanesmenu/login', 'Auth\AuthController@postLogin')->name('login');

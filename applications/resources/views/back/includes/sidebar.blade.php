@@ -27,7 +27,7 @@
         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
       </a>
     </li>
-    <li class="treeview {{ Route::currentRouteNamed('menu.category') ? 'active' : '' }}{{ Route::currentRouteNamed('menu.ingredients') ? 'active' : '' }}">
+    <li class="treeview {{ Route::currentRouteNamed('menu.category') ? 'active' : '' }}{{ Route::currentRouteNamed('menu.ingredients') ? 'active' : '' }}{{ Route::currentRouteNamed('menu.menus') ? 'active' : '' }}{{ Route::currentRouteNamed('menu.menusShow') ? 'active' : ''}}">
       <a href="#">
         <i class="fa fa-spoon"></i>
         <span>Menu Management</span>
@@ -35,7 +35,7 @@
       </a>
       <ul class="treeview-menu">
         <li class="{{ Route::currentRouteNamed('menu.category') ? 'active' : '' }}"><a href="{{ route('menu.category') }}"><i class="fa fa-circle-o"></i> Category</a></li>
-        <li class="{{ Route::currentRouteNamed('menu.menus') ? 'active' : '' }}"><a href="{{ route('menu.menus') }}"><i class="fa fa-circle-o"></i> Menu</a></li>
+        <li class="{{ Route::currentRouteNamed('menu.menus') ? 'active' : '' }}{{ Route::currentRouteNamed('menu.menusShow') ? 'active' : ''}}"><a href="{{ route('menu.menus') }}"><i class="fa fa-circle-o"></i> Menu</a></li>
         <li class="{{ Route::currentRouteNamed('menu.ingredients') ? 'active' : ''}}"><a href="{{ route('menu.ingredients') }}"><i class="fa fa-circle-o"></i> Ingredients</a></li>
       </ul>
     </li>

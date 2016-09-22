@@ -10,7 +10,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-    <li class="active">Menu Management</li>
+    <li class="active">Menu Category</li>
   </ol>
 @stop
 
@@ -133,6 +133,7 @@
     <div class="col-md-3">
       <div class="box box-widget widget-user-2">
         <div class="widget-user-header bg-white">
+          <h3 class="widget-user-username">{{ $category->name }}</h3>
           <h5 class="widget-user-desc">
             <span data-toggle="tooltip" title="Edit Category">
               <a href="" class="btn btn-warning btn-flat btn-xs edit" data-toggle="modal" data-target="#myModalEditCategory" data-value="{{ $category->id }}"><i class="fa fa-edit"> Edit</i></a>
@@ -141,7 +142,6 @@
               <a href="" class="btn btn-default btn-flat btn-xs trash" data-toggle="modal" data-target="#myModalDeleteCategory" data-value="{{ $category->id }}"><i class="fa fa-trash"> Trash</i></a>
             </span>
           </h5>
-          <h3 class="widget-user-username">{{ $category->name }}</h3>
         </div>
         <div class="box-footer no-padding">
           <ul class="nav nav-stacked">
