@@ -11,6 +11,7 @@ use App\Models\Ingredients;
 use App\Models\RecipeMenu;
 use Auth;
 use Validator;
+use Image;
 
 
 class MenuController extends Controller
@@ -182,7 +183,28 @@ class MenuController extends Controller
                       ->where('fra_menus.id', $id)
                       ->get();
 
-      return view('back.pages.menu.menusshow', compact('menus'));
+      $ingredients = RecipeMenu::join('fra_ingredients', 'fra_ingredients.id', '=', 'fra_recipemenu.ingredients_id')
+                                ->select('fra_recipemenu.size', 'fra_ingredients.name', 'fra_ingredients.unit')
+                                ->where('fra_recipemenu.menu_id', $menus[0]->id)
+                                ->get();
+
+      return view('back.pages.menu.menusshow', compact('menus', 'ingredients'));
+    }
+
+    public function menuImage(Request $request)
+    {
+      $set = Menus::find($request->menu_id);
+
+      $file = $request->file('image');
+
+      $photo_name = $set->name. '.' . $file->getClientOriginalExtension();
+      Image::make($file)->resize(443,350)->save('images/'. $photo_name);
+
+      $set->image = $photo_name;
+      $set->user_id = $request->user_id;
+      $set->save();
+
+      return redirect()->route('menu.menusShow', array('id' => $request->menu_id))->with('message', 'Profile Has Been Changed.');
     }
 
 }
