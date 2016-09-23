@@ -193,6 +193,18 @@ class MenuController extends Controller
 
     public function menuImage(Request $request)
     {
+      $message  = [
+        'image.required' => 'Fill This Field',
+      ];
+
+      $validator  = Validator::make($request->all(), [
+        'image'  => 'required',
+      ], $message);
+
+      if($validator->fails()){
+        return redirect()->route('menu.menusShow', array('id' => $request->menu_id))->withErrors($validator)->withInput();
+      }
+
       $set = Menus::find($request->menu_id);
 
       $file = $request->file('image');

@@ -60,6 +60,7 @@
               </div>
               <div class="col-sm-8 {{ $errors->has('image') ? 'has-error' : '' }}">
                 <input type="file" name="image" class="form-control" accept=".png, .jpg" value="{{ old('image') }}">
+                <span><i>{{ $menus[0]->image }}</i></span>
                 @if($errors->has('image'))
                 <span class="help-block">
                   <i>* {{$errors->first('image')}}</i>
@@ -183,9 +184,11 @@
 
 @section('script')
 <script src="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
-
-
-
+<script type="text/javascript">
+@if (count($errors) > 0)
+  $('#myModalCreateImage').modal('show');
+@endif
+</script>
 <script>
   window.setTimeout(function() {
     $(".alert-success").fadeTo(500, 0).slideUp(500, function(){
