@@ -255,7 +255,10 @@ class MenuController extends Controller
     {
       $menus   = Menus::find($id);
 
-      $recipes  = RecipeMenu::where('menu_id', $id)->get();
+      $recipes  = RecipeMenu::join('fra_ingredients', 'fra_ingredients.id', '=', 'fra_recipemenu.ingredients_id')
+                            ->select('fra_ingredients.id as ingredients_id', 'fra_ingredients.*', 'fra_recipemenu.*')
+                            ->where('fra_recipemenu.menu_id', $id)->get();
+
       $ingredients  = Ingredients::get();
 
       return view('back.pages.menu.recipeedit', compact('menus', 'ingredients', 'recipes'));
@@ -263,7 +266,7 @@ class MenuController extends Controller
 
     public function recipeUpdate(Request $request)
     {
-      
+      dd($request);
     }
 
 }
