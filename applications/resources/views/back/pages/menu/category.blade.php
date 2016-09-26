@@ -147,7 +147,7 @@
           <ul class="nav nav-stacked">
             @foreach ($menus as $menu)
             @if($category->id == $menu->menucategory_id)
-            <li><a href="{{ $menu->id }}">{{ $menu->name }}</a></li>
+            <li><a href="{{ url('hurricanesmenu/menu-menus/show/')}}{{ '/'.$menu->id }}">{{ $menu->name }}</a></li>
             @endif
             @endforeach
           </ul>

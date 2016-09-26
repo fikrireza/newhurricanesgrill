@@ -111,11 +111,11 @@
           <h3 class="box-title pull-right">
             @if ($ingredients->isEmpty())
               <span data-toggle="tooltip" title="Create Recipe">
-                <a href="{{ url('hurricanesmenu/menu-menus/show/') }}{{ '/'.$menus[0]->id}}" class="btn bg-red btn-flat btn-xs edit"><i class="fa fa-plus"> Create</i></a>
+                <a href="{{ url('hurricanesmenu/menu-menus/recipe-create/') }}{{ '/'.$menus[0]->id}}" class="btn bg-red btn-flat btn-xs edit"><i class="fa fa-plus"> Create</i></a>
               </span>
             @else
               <span data-toggle="tooltip" title="Edit Recipe">
-                <a href="{{ url('hurricanesmenu/menu-menus/show/') }}{{ '/'.$menus[0]->id}}" class="btn bg-orange btn-flat btn-xs edit"><i class="fa fa-edit"> Edit</i></a>
+                <a href="{{ url('hurricanesmenu/menu-menus/recipe-edit/') }}{{ '/'.$menus[0]->id}}" class="btn bg-orange btn-flat btn-xs edit"><i class="fa fa-edit"> Edit</i></a>
               </span>
             @endif
           </h3>
@@ -124,7 +124,9 @@
         <div class="box-body">
           <table class="table">
             <thead>
-              <th colspan="2"></th>
+              <th width="100px"></th>
+              <th width="45px"></th>
+              <th width="55px"></th>
             </thead>
             <tbody>
               @if ($ingredients->isEmpty())
@@ -136,6 +138,7 @@
               <tr>
                 <td>{{ $key->name }}</td>
                 <td>{{ $key->size }} {{ $key->unit }}</td>
+                <td>{{ $key->notes }}</td>
               </tr>
               @endforeach
               @endif

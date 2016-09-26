@@ -10,6 +10,7 @@ use App\Models\Menus;
 use App\Models\Ingredients;
 use App\Models\RecipeMenu;
 use Auth;
+use DB;
 use Validator;
 use Image;
 
@@ -184,7 +185,7 @@ class MenuController extends Controller
                       ->get();
 
       $ingredients = RecipeMenu::join('fra_ingredients', 'fra_ingredients.id', '=', 'fra_recipemenu.ingredients_id')
-                                ->select('fra_recipemenu.size', 'fra_ingredients.name', 'fra_ingredients.unit')
+                                ->select('fra_recipemenu.size', 'fra_ingredients.name', 'fra_ingredients.unit', 'fra_recipemenu.notes')
                                 ->where('fra_recipemenu.menu_id', $menus[0]->id)
                                 ->get();
 
@@ -217,6 +218,52 @@ class MenuController extends Controller
       $set->save();
 
       return redirect()->route('menu.menusShow', array('id' => $request->menu_id))->with('message', 'Profile Has Been Changed.');
+    }
+
+    public function recipeCreate($id)
+    {
+      $menus   = Menus::find($id);
+      // dd($menus->id);
+      $ingredients  = Ingredients::get();
+
+      return view('back.pages.menu.recipecreate', compact('menus', 'ingredients'));
+    }
+
+    public function recipeStore(Request $request)
+    {
+
+      DB::transaction(function() use($request) {
+        $recipes = $request->input('ingredients');
+        if($recipes != ""){
+          foreach($recipes as $recipe){
+            $create = new RecipeMenu;
+            $create->ingredients_id = $recipe['ingredient'];
+            $create->size           = $recipe['size'];
+            $create->menu_id        = $request->menu_id;
+            $create->notes          = $recipe['notes'];
+            $create->user_id        = $request->user_id;
+            $create->save();
+          }
+        }
+
+      });
+
+      return redirect()->route('menu.menusShow', array('id' => $request->menu_id))->with('message','New Recipe Has Been Created.');
+    }
+
+    public function recipeEdit($id)
+    {
+      $menus   = Menus::find($id);
+
+      $recipes  = RecipeMenu::where('menu_id', $id)->get();
+      $ingredients  = Ingredients::get();
+
+      return view('back.pages.menu.recipeedit', compact('menus', 'ingredients', 'recipes'));
+    }
+
+    public function recipeUpdate(Request $request)
+    {
+      
     }
 
 }
