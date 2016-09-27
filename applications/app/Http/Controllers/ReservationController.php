@@ -19,7 +19,17 @@ use Auth;
 
 class ReservationController extends Controller
 {
+    /**
+    * Authentication controller.
+    *
+    * @return void
+    */
+    public function __construct()
+    {
+        $this->middleware('isUser');
+    }
 
+    
     public function index()
     {
       $user = Auth::user()->branch_id;

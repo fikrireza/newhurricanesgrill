@@ -15,7 +15,17 @@ use App\Http\Requests\BranchRequest;
 
 class BranchController extends Controller
 {
+    /**
+    * Authentication controller.
+    *
+    * @return void
+    */
+    public function __construct()
+    {
+        $this->middleware('isUser');
+    }
 
+    
     public function index()
     {
       $getBranch = Branch::get();

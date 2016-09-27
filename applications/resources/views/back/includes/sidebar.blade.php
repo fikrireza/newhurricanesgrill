@@ -22,11 +22,12 @@
   </div>
   <ul class="sidebar-menu">
     <li class="header">MAIN NAVIGATION</li>
-    <li>
+    <li class="{{ Route::currentRouteNamed('dashboard') ? 'active' : ''}}">
       <a href="{{ url('hurricanesmenu/dashboard')}}">
         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
       </a>
     </li>
+    @if ((Auth::user()->level == 1) || (Auth::user()->level == 2) || (Auth::user()->level == 5))
     <li class="treeview {{ Route::currentRouteNamed('menu.category') ? 'active' : '' }}{{ Route::currentRouteNamed('menu.ingredients') ? 'active' : '' }}{{ Route::currentRouteNamed('menu.menus') ? 'active' : '' }}{{ Route::currentRouteNamed('menu.menusShow') ? 'active' : ''}}">
       <a href="#">
         <i class="fa fa-spoon"></i>
@@ -39,6 +40,8 @@
         <li class="{{ Route::currentRouteNamed('menu.ingredients') ? 'active' : ''}}"><a href="{{ route('menu.ingredients') }}"><i class="fa fa-circle-o"></i> Ingredients</a></li>
       </ul>
     </li>
+    @endif
+    @if ((Auth::user()->level == 1) || (Auth::user()->level == 2) || (Auth::user()->level == 3) || (Auth::user()->level == 4))
     <li class="treeview {{ Route::currentRouteNamed('reservation.payment') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.block') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.cancel') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.create') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.bind') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.paymentsearch') ? 'active' : '' }}">
       <a href="#">
         <i class="fa fa-edit"></i>
@@ -53,11 +56,15 @@
         <li><a href="{{ url('hurricanesmenu/dashboard')}}"><i class="fa fa-circle-o"></i> Reservation Report</a></li>
       </ul>
     </li>
+    @endif
+    @if ((Auth::user()->level == 1) || (Auth::user()->level == 2))
     <li class="{{ Route::currentRouteNamed('branch') ? 'active' : '' }}{{ Route::currentRouteNamed('branch.view') ? 'active' : '' }}">
       <a href="{{ route('branch') }}">
         <i class="fa fa-laptop"></i><span>Branch Management</span>
       </a>
     </li>
+    @endif
+    @if ((Auth::user()->level == 1) || (Auth::user()->level == 2))
     <li class="treeview {{ Route::currentRouteNamed('account') ? 'active' : '' }}{{ Route::currentRouteNamed('profile') ? 'active' : '' }}">
       <a href="#">
         <i class="fa fa-dashboard"></i>
@@ -69,5 +76,6 @@
         <li class="{{ Route::currentRouteNamed('profile') ? 'active' : '' }}"><a href="{{ route('profile') }}"><i class="fa fa-circle-o"></i> <span>Profile</span></a></li>
       </ul>
     </li>
+    @endif
   </ul>
 </section>

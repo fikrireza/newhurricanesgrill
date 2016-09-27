@@ -15,6 +15,15 @@ use Auth;
 
 class AccountManagementController extends Controller
 {
+  /**
+  * Authentication controller.
+  *
+  * @return void
+  */
+  public function __construct()
+  {
+      $this->middleware('isUser');
+  }
 
 
   public function index()

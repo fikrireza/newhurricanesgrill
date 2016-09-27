@@ -18,7 +18,17 @@ use Image;
 class MenuController extends Controller
 {
 
+    /**
+    * Authentication controller.
+    *
+    * @return void
+    */
+    public function __construct()
+    {
+        $this->middleware('isUser');
+    }
 
+    
     public function category()
     {
       $categoryMenus = MenuCategory::where('flag_active', 1)->get();
