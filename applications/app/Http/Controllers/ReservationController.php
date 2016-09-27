@@ -29,7 +29,7 @@ class ReservationController extends Controller
         $this->middleware('isUser');
     }
 
-    
+
     public function index()
     {
       $user = Auth::user()->branch_id;
@@ -389,25 +389,40 @@ class ReservationController extends Controller
 
     public function search(Request $request)
     {
+
       $setBooking_code = $request->booking_code;
       $setReserve_date = $request->reserve_date;
       $setSeason       = $request->season;
       $setBranch_id    = $request->branch_id;
 
       $user = Auth::user()->branch_id;
-      if($user != null){
+      if($user != null)
+      {
         $getBranch = Branch::where('id', '=', $user)->get();
       }
-      else {
+      else
+      {
         $getBranch = Branch::get();
       }
 
-      if($setBooking_code != null)
+      if($setSeason == 'lunch')
+      {
+        $setSeason = '<';
+      }
+      elseif($setSeason == 'dinner')
+      {
+        $setSeason = '>';
+      }
+
+      /// BOOKING CODE && RESERVE DATE && SEASON && BRANCH ///
+      if(($setBooking_code != null) && ($setReserve_date != null) && ($setSeason != null) && ($setBranch_id != null))
       {
         $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
                                   ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
                                   ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
-                                  ->where('fra_branch.id', $user)
+                                  ->where('fra_reservation.branch_id', $setBranch_id)
+                                  ->where('fra_reservation.reserve_date', $setReserve_date)
+                                  ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
                                   ->where('fra_reservation.booking_code', $setBooking_code)
                                   ->orderBy('reserve_time', 'asc')
                                   ->get();
@@ -417,12 +432,271 @@ class ReservationController extends Controller
 
         $getSize = DB::table('fra_reservation')
                           ->select(DB::raw('SUM(size) as total_size'))
-                          ->where('branch_id', '=', $user)
                           ->where('fra_reservation.booking_code', $setBooking_code)
                           ->get();
       }
+      /// BOOKING CODE && RESERVE DATE && SEASON ///
+      elseif(($setBooking_code != null) && ($setReserve_date != null) && ($setSeason != null) && ($setBranch_id == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.reserve_date', $setReserve_date)
+                                  ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                                  ->where('fra_reservation.booking_code', $setBooking_code)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.booking_code', $setBooking_code)
+                          ->get();
+      }
+      /// BOOKING CODE && SEASON && BRANCH ///
+      elseif(($setBooking_code != null) && ($setSeason != null) && ($setBranch_id != null)  && ($setReserve_date == null) )
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.branch_id', $setBranch_id)
+                                  ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                                  ->where('fra_reservation.booking_code', $setBooking_code)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.booking_code', $setBooking_code)
+                          ->get();
+      }
+      /// BOOKING CODE && BRANCH ///
+      elseif(($setBooking_code != null) && ($setBranch_id != null) && ($setSeason == null) && ($setReserve_date == null) )
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.branch_id', $setBranch_id)
+                                  ->where('fra_reservation.booking_code', $setBooking_code)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.branch_id', $setBranch_id)
+                          ->where('fra_reservation.booking_code', $setBooking_code)
+                          ->get();
+      }
+      /// BOOKING CODE && SEASON ///
+      elseif(($setBooking_code != null) && ($setSeason != null) && ($setBranch_id == null)  && ($setReserve_date == null) )
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                                  ->where('fra_reservation.booking_code', $setBooking_code)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.booking_code', $setBooking_code)
+                          ->get();
+      }
+      /// BOOKING CODE && RESERVE DATE ///
+      elseif(($setBooking_code != null) && ($setReserve_date != null) && ($setSeason == null) && ($setBranch_id == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.reserve_date', $setReserve_date)
+                                  ->where('fra_reservation.booking_code', $setBooking_code)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.booking_code', $setBooking_code)
+                          ->get();
+      }
+      /// BOOKING CODE ///
+      elseif(($setBooking_code != null) && ($setReserve_date == null) && ($setSeason == null) && ($setBranch_id == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.booking_code', $setBooking_code)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.booking_code', $setBooking_code)
+                          ->get();
+
+      }
+      /// RESERVE DATE && SEASON && BRANCH///
+      elseif(($setReserve_date != null) && ($setSeason != null) && ($setBranch_id != null) && ($setBooking_code == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                                  ->where('fra_reservation.reserve_date', $setReserve_date)
+                                  ->where('fra_reservation.branch_id', $setBranch_id)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                          ->where('fra_reservation.reserve_date', $setReserve_date)
+                          ->where('fra_reservation.branch_id', $setBranch_id)
+                          ->get();
+      }
+      /// RESERVE DATE && BRANCH ///
+      elseif(($setReserve_date != null) && ($setBranch_id != null) && ($setSeason == null) && ($setBooking_code == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.branch_id', $setBranch_id)
+                                  ->where('fra_reservation.reserve_date', $setReserve_date)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.branch_id', $setBranch_id)
+                          ->where('fra_reservation.reserve_date', $setReserve_date)
+                          ->get();
+      }
+      /// RESERVE DATE && SEASON ///
+      elseif(($setReserve_date != null) && ($setSeason != null) && ($setBooking_code == null) && ($setBranch_id == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                                  ->where('fra_reservation.reserve_date', $setReserve_date)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                          ->where('fra_reservation.reserve_date', $setReserve_date)
+                          ->get();
+      }
+      /// RESERVE DATE ///
+      elseif(($setReserve_date != null) && ($setSeason == null) && ($setBooking_code == null) && ($setBranch_id == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.reserve_date', $setReserve_date)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.reserve_date', $setReserve_date)
+                          ->get();
+      }
+      /// SEASON && BRANCH ///
+      elseif(($setSeason != null) && ($setBranch_id != null) && ($setReserve_date == null) && ($setBooking_code == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                                  ->where('fra_reservation.branch_id', $setBranch_id)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                          ->where('fra_reservation.branch_id', $setBranch_id)
+                          ->get();
+      }
+      /// SEASON ///
+      elseif(($setSeason != null) && ($setReserve_date == null) && ($setBooking_code == null) && ($setBranch_id == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.reserve_time', $setSeason, '16:30:00')
+                          ->get();
+      }
+      /// BRANCH ///
+      elseif(($setBranch_id != null) && ($setSeason == null) && ($setBooking_code == null) && ($setReserve_date == null))
+      {
+        $getReservation = Reservation::join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->leftjoin('fra_users', 'fra_users.id', '=', 'fra_reservation.user_id')
+                                  ->select('fra_reservation.*', 'fra_branch.name as branch_name', 'fra_users.name as username')
+                                  ->where('fra_reservation.branch_id', $setBranch_id)
+                                  ->orderBy('reserve_time', 'asc')
+                                  ->get();
+
+        $grouping = collect($getReservation);
+        $allReservation = $grouping->groupBy('reserve_time')->toArray();
+
+        $getSize = DB::table('fra_reservation')
+                          ->select(DB::raw('SUM(size) as total_size'))
+                          ->where('fra_reservation.branch_id', $setBranch_id)
+                          ->get();
+      }
+
+      if($setReserve_date != null){
+        $setReserve_date = date('Y-m-d', strtotime($setReserve_date));
+      }else{
+        $serReserve_date;
+      }
 
       return view('back.pages.reservation.search', compact('setBooking_code', 'setReserve_date', 'setSeason', 'setBranch_id', 'allReservation', 'search', 'getSize', 'getBranch'));
+
     }
 
 

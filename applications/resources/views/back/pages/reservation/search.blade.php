@@ -83,14 +83,14 @@
             </div>
             <div class="col-xs-3">
               <select name="season" class="form-control">
-                <option value="all" {{ $setSeason == 'all' ? 'selected' : ''}}>-- Choose --</option>
-                <option value="lunch" {{ $setSeason == 'lunch' ? 'selected' : ''}}>Lunch</option>
-                <option value="dinner" {{ $setSeason == 'dinner' ? 'selected' : ''}}>Dinner</option>
+                <option value="">-- Choose --</option>
+                <option value="lunch" {{ $setSeason == '<' ? 'selected' : ''}}>Lunch</option>
+                <option value="dinner" {{ $setSeason == '>' ? 'selected' : ''}}>Dinner</option>
               </select>
             </div>
             <div class="col-xs-3">
               <select name="branch_id" class="form-control">
-                <option value="all" {{ $setBranch_id == 'dinner' ? 'selected' : ''}}>-- Choose --</option>
+                <option value="" {{ $setBranch_id == 'dinner' ? 'selected' : ''}}>-- Choose --</option>
                 @foreach($getBranch as $key)
                   <option value="{{ $key->id }}" {{ $setBranch_id == $key->id ? 'selected' : ''}}>{{ $key->name }}</option>
                 @endforeach
@@ -233,7 +233,8 @@
   $(function () {
     //Date picker
     $('#reserve_date').datepicker({
-      autoclose: true
+      autoclose: true,
+      format: 'yyyy-mm-dd',
     });
 
     //Flat red color scheme for iCheck
