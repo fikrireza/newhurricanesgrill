@@ -86,8 +86,11 @@ Route::post('hurricanesmenu/menu-menusupdate', 'MenuController@menuUpdate')->nam
 Route::get('hurricanesmenu/menu-menus/show/{id}', 'MenuController@menusShow')->name('menu.menusShow');
 Route::get('hurricanesmenu/menu-menus/recipe-create/{id}', 'MenuController@recipeCreate')->name('menu.recipeCreate');
 Route::post('hurricanesmenu/menu-menus/recipe-create', 'MenuController@recipeStore')->name('menu.recipeStore');
+Route::post('hurricanesmenu/menu-menus/recipe-add', 'MenuController@recipeAdd')->name('menu.recipeAdd');
 Route::get('hurricanesmenu/menu-menus/recipe-edit/{id}', 'MenuController@recipeEdit')->name('menu.recipeEdit');
-Route::post('hurricanesmenu/menu-menus/recipe-edit', 'MenuController@recipeUpdate')->name('menu.recipeUpdate');
+Route::get('hurricanesmenu/menu-recipebind/{id}', 'MenuController@recipeBind')->name('menu.recipeBind');
+Route::post('hurricanesmenu/menu-menus/recipe-change', 'MenuController@recipeChange')->name('menu.recipeChange');
+Route::get('hurricanesmenu/menu-menus/recipe-delete/{id}', 'MenuController@recipeDelete')->name('menu.recipeDelete');
 Route::post('hurricanesmenu/menu-menuimage/', 'MenuController@menuImage')->name('menu.menuImage');
 
 

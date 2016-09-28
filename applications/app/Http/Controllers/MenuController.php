@@ -28,7 +28,7 @@ class MenuController extends Controller
         $this->middleware('isUser');
     }
 
-    
+
     public function category()
     {
       $categoryMenus = MenuCategory::where('flag_active', 1)->get();
@@ -274,9 +274,74 @@ class MenuController extends Controller
       return view('back.pages.menu.recipeedit', compact('menus', 'ingredients', 'recipes'));
     }
 
-    public function recipeUpdate(Request $request)
+    public function recipeAdd(Request $request)
     {
-      dd($request);
+      $menu_id = $request->menu_id;
+
+      $message  = [
+        'size.required' => 'Fill This Field',
+        'ingredients.required'  => 'Fill This Field',
+      ];
+
+      $validator = Validator::make($request->all(), [
+        'size'  => 'required',
+        'ingredients' => 'required',
+      ], $message);
+
+      if($validator->fails()){
+        return redirect()->route('menu.recipeEdit', array('id' => $menu_id))->withErrors($validator)->withInput();
+      }
+
+      $set = new RecipeMenu;
+      $set->ingredients_id  = $request->ingredients;
+      $set->size            = $request->size;
+      $set->menu_id         = $request->menu_id;
+      $set->notes           = $request->notes;
+      $set->user_id         = $request->user_id;
+      $set->save();
+
+      return redirect()->route('menu.recipeEdit', array('id' => $menu_id))->with('message', 'New Ingredient Has Been Added');
+    }
+
+    public function recipeBind($id)
+    {
+      $bind = RecipeMenu::find($id);
+
+      return $bind;
+    }
+
+    public function recipeChange(Request $request)
+    {
+      $menu_id  = $request->menu_id;
+
+      $message  = [
+        'editSize.required' => 'Fill This Field',
+        'editIngredients_id.required'  => 'Fill This Field',
+      ];
+
+      $validator = Validator::make($request->all(), [
+        'editSize'  => 'required',
+        'editIngredients_id' => 'required',
+      ], $message);
+
+      if($validator->fails()){
+        return redirect()->route('menu.recipeEdit', array('id' => $menu_id))->withErrors($validator)->withInput();
+      }
+
+      $update = RecipeMenu::find($request->editId);
+      $update->ingredients_id  = $request->editIngredients_id;
+      $update->size = $request->editSize;
+      $update->notes  = $request->editNotes;
+      $update->user_id  = $request->user_id;
+      $update->save();
+
+      return redirect()->route('menu.recipeEdit', array('id' => $menu_id))->with('message', 'The Ingredient Successfully Changed');
+    }
+
+    public function recipeDelete($id)
+    {
+      $delete = RecipeMenu::find($id);
+      $delete->delete();
     }
 
 }
