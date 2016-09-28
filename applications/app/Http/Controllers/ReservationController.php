@@ -688,6 +688,13 @@ class ReservationController extends Controller
                           ->where('fra_reservation.branch_id', $setBranch_id)
                           ->get();
       }
+      /// Empty ///
+      elseif(($setBranch_id == null) && ($setSeason == null) && ($setBooking_code == null) && ($setReserve_date == null))
+      {
+        $allReservation = "";
+
+        return view('back.pages.reservation.search', compact('setBooking_code', 'setReserve_date', 'setSeason', 'getBranch', 'setBranch_id', 'allReservation'))->with('error', 'Please Input Atleast One Parameter');
+      }
 
       if($setReserve_date != null){
         $setReserve_date = date('Y-m-d', strtotime($setReserve_date));

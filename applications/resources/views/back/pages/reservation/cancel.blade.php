@@ -35,7 +35,7 @@
             <thead>
               <tr class="bg-red">
                 <th>Booking Code</th>
-                <th>Date</th>
+                <th>Reserve Date</th>
                 <th>Time</th>
                 <th>Location</th>
                 <th>Name</th>
@@ -50,15 +50,16 @@
             @foreach($allCancel as $key)
             <tr>
               <td>{{ $key->booking_code  }}</td>
-              <td>{{date("d-M-Y",strtotime($key->reserve_date))}}</td>
+              <td>{{date("Y-M-d",strtotime($key->reserve_date))}}</td>
               <td>{{ $key->reserve_time  }}</td>
               <td>{{ $key->branch_name  }}</td>
               <td>{{ $key->name  }}</td>
               <td>{{ $key->handphone  }}</td>
               <td>{{ $key->size  }}</td>
               <td>{{ $key->email  }}</td>
-              <td>{{ $key->specialreq  }}</td>
+              <td>@if($key->specialreq != null){{ $key->specialreq }} @else - @endif</td>
               <td>{{ $key->username  }}</td>
+              @if($key->reserve_date < date('y-m-d'))
               <td>@if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 3 || Auth::user()->level == 4)
               <span data-toggle="tooltip" title="Edit Reservation">
                 <a href="{{ url('hurricanesmenu/reservation-bind') }}{{'/'.$key->id }}" class="btn bg-blue btn-block btn-xs" data-value="{{ $key->id }}"><i class="fa fa-edit"></i></a>
@@ -66,10 +67,25 @@
               @if($key->size > 9)
                 @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 3 || Auth::user()->level == 4)
               <span data-toggle="tooltip" title="Confirm Reservation">
-                <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$key->id }}" class="btn btn-default btn-flat btn-xs" data-value="{{ $key->id }}"><i class="fa fa-check-square-o"></i></a>
+                <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$key->id }}" class="btn bg-green btn-block btn-xs" data-value="{{ $key->id }}"><i class="fa fa-check-square-o"></i></a>
               </span>
                 @endif
-              @endif</td>
+                @endif
+              </td>
+              @else
+              <td>@if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 3 || Auth::user()->level == 4)
+                <span data-toggle="tooltip" title="Edit Reservation">
+                  <a href="{{ url('hurricanesmenu/reservation-bind') }}{{'/'.$key->id }}" class="btn bg-blue btn-block btn-xs disabled" data-value="{{ $key->id }}"><i class="fa fa-edit"></i></a>
+                </span>&nbsp;@endif
+                @if($key->size > 9)
+                  @if(Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 3 || Auth::user()->level == 4)
+                <span data-toggle="tooltip" title="Confirm Reservation">
+                  <a href="{{ url('hurricanesmenu/reservation-accept') }}{{'/'.$key->id }}" class="btn bg-green btn-block btn-xs disabled" data-value="{{ $key->id }}"><i class="fa fa-check-square-o"></i></a>
+                </span>
+                  @endif
+                @endif
+              </td>
+              @endif
             </tr>
             @endforeach
           </table>

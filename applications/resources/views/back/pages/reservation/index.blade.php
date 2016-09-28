@@ -142,7 +142,7 @@
 
               @if($reservation_time['size'] > 9 && $reservation_time['status'] == 0)
               <tr style="background:#000;color:#FFF">
-              @elseif($reservation_time['username'] == '' && $reservation_time['status'] == 0)
+              @elseif($reservation_time['user_id'] == 0 && $reservation_time['status'] == 0)
               <tr style="background:#C96;">
               @elseif($reservation_time['status'] == 1)
               <tr style="background:#CCC">
@@ -196,7 +196,7 @@
               <?php $grandTotal++; ?>
               @endforeach
               <tr style="background:#069;color:#FFF">
-                <td colspan="6">Reservation Total : </td>
+                <td colspan="6">Reservation Total : {{ count($reservation) }}</td>
                 <td></td>
                 <td colspan="5"></td>
               </tr>

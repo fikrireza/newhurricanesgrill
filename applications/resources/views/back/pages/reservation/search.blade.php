@@ -26,6 +26,13 @@
           <p>{{ Session::get('message') }}</p>
         </div>
       @endif
+      @if(Session::has('error'))
+        <div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h4><i class="icon fa fa-check"></i> Alert!</h4>
+          <p>{{ Session::get('error') }}</p>
+        </div>
+      @endif
     </div>
 
     <div class="modal fade" id="myModalAktif" role="dialog">
@@ -197,7 +204,7 @@
               <?php $grandTotal++; ?>
               @endforeach
               <tr style="background:#069;color:#FFF">
-                <td colspan="6">Reservation Total : </td>
+                <td colspan="6">Reservation Total : {{ count($reservation) }}</td>
                 <td></td>
                 <td colspan="5"></td>
               </tr>
