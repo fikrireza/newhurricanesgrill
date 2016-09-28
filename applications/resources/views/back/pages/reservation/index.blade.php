@@ -78,7 +78,7 @@
               <input type="text" class="form-control" name="booking_code" placeholder="Booking Code" value="">
             </div>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="reserve_date" id="reserve_date" value="">
+              <input type="text" class="form-control" name="reserve_date" id="reserve_date" value="" placeholder="yyyy-mm-dd">
             </div>
             <div class="col-xs-3">
               <select name="season" class="form-control">

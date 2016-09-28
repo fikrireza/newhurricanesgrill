@@ -79,7 +79,7 @@
               <input type="text" class="form-control" name="booking_code" placeholder="Booking Code" value="{{ $setBooking_code }}">
             </div>
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="reserve_date" id="reserve_date" value="{{ $setReserve_date }}">
+              <input type="text" class="form-control" name="reserve_date" id="reserve_date" placeholder="yyyy-mm-dd" value="{{ $setReserve_date }}">
             </div>
             <div class="col-xs-3">
               <select name="season" class="form-control">

@@ -42,14 +42,14 @@
     </li>
     @endif
     @if ((Auth::user()->level == 1) || (Auth::user()->level == 2) || (Auth::user()->level == 3) || (Auth::user()->level == 4))
-    <li class="treeview {{ Route::currentRouteNamed('reservation.payment') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.block') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.cancel') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.create') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.bind') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.paymentsearch') ? 'active' : '' }}">
+    <li class="treeview {{ Route::currentRouteNamed('reservation.payment') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.block') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.cancel') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.create') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.bind') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.paymentsearch') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.search') ? 'active' : '' }}">
       <a href="#">
         <i class="fa fa-edit"></i>
         <span>Reservation Management</span>
         <i class="fa fa-angle-left pull-right"></i>
       </a>
       <ul class="treeview-menu">
-        <li class="{{ Route::currentRouteNamed('reservation') ? 'active' : '' }}"><a href="{{ route('reservation') }}"><i class="fa fa-circle-o"></i> Reservation List</a></li>
+        <li class="{{ Route::currentRouteNamed('reservation') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.search') ? 'active' : '' }}"><a href="{{ route('reservation') }}"><i class="fa fa-circle-o"></i> Reservation List</a></li>
         <li class="{{ Route::currentRouteNamed('reservation.cancel') ? 'active' : '' }}"><a href="{{ route('reservation.cancel') }}"><i class="fa fa-circle-o"></i> Reservation Cancelled</a></li>
         <li class="{{ Route::currentRouteNamed('reservation.block') ? 'active' : '' }}"><a href="{{ route('reservation.block') }}"><i class="fa fa-circle-o"></i> Reservation Block</a></li>
         <li class="{{ Route::currentRouteNamed('reservation.payment') ? 'active' : '' }}{{ Route::currentRouteNamed('reservation.paymentsearch') ? 'active' : '' }}"><a href="{{ route('reservation.payment') }}"><i class="fa fa-circle-o"></i> Group Booking Payment</a></li>

@@ -809,10 +809,23 @@ class ReservationController extends Controller
 
     public function payment()
     {
+      $branch = Auth::user()->branch_id;
 
-      $payments = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
-                                ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date')
-                                ->get();
+      if($branch != null)
+      {
+        $payments = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
+                                  ->join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date', 'fra_branch.name as branch_name')
+                                  ->where('fra_reservation.branch_id', $branch)
+                                  ->get();
+      }
+      else
+      {
+        $payments = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
+                                  ->join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date', 'fra_branch.name as branch_name')
+                                  ->get();
+      }
 
       return view('back.pages.reservation.payment', compact('payments'));
     }
@@ -822,15 +835,36 @@ class ReservationController extends Controller
       $from = $request->from;
       $to   = $request->to;
 
-      $paymentSearch = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
-                                ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date')
-                                ->whereBetween('fra_confirmpayment.date_payment', [$from, $to])
-                                ->get();
+      $branch = Auth::user()->branch_id;
 
-      $payments = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
-                                ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date')
-                                ->get();
+      if($branch != null)
+      {
+        $paymentSearch = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
+                                  ->join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date', 'fra_branch.name as branch_name')
+                                  ->whereBetween('fra_confirmpayment.date_payment', [$from, $to])
+                                  ->where('fra_reservation.branch_id', $branch)
+                                  ->get();
 
+        $payments = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
+                                  ->join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date', 'fra_branch.name as branch_name')
+                                  ->where('fra_reservation.branch_id', $branch)
+                                  ->get();
+      }
+      else
+      {
+        $paymentSearch = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
+                                  ->join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date', 'fra_branch.name as branch_name')
+                                  ->whereBetween('fra_confirmpayment.date_payment', [$from, $to])
+                                  ->get();
+
+        $payments = ConfirmPayment::join('fra_reservation', 'fra_reservation.id', '=', 'fra_confirmpayment.reservation_id')
+                                  ->join('fra_branch', 'fra_branch.id', '=', 'fra_reservation.branch_id')
+                                  ->select('fra_confirmpayment.*', 'fra_reservation.booking_code as booking_code', 'fra_reservation.reserve_date as booking_date', 'fra_branch.name as branch_name')
+                                  ->get();
+      }
       return view('back.pages.reservation.payment', compact('paymentSearch', 'payments', 'from', 'to'));
     }
 }

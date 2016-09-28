@@ -34,11 +34,11 @@
           <div class="row">
             <div class="col-xs-6">
               From
-              <input type="text" class="form-control" name="from" id="from" value="@if(isset($paymentSearch)){{ $from }} @endif">
+              <input type="text" class="form-control" name="from" id="from" placeholder="yyyy-mm-dd" value="@if(isset($paymentSearch)){{ $from }} @endif">
             </div>
             <div class="col-xs-6">
               To
-              <input type="text" class="form-control" name="to" id="to" value="@if(isset($paymentSearch)){{ $to }} @endif">
+              <input type="text" class="form-control" name="to" id="to" placeholder="yyyy-mm-dd" value="@if(isset($paymentSearch)){{ $to }} @endif">
             </div>
           </div>
         </div>
@@ -63,6 +63,8 @@
                 <th>Total Payment</th>
                 <th>Booking Date</th>
                 <th>Booking Code</th>
+                <th>Receipt</th>
+                <th>Branch</th>
               </tr>
             </thead>
             @if (isset($paymentSearch))
@@ -73,6 +75,8 @@
                 <td>Rp. {{ number_format($key->total_payment,0,',','.') }},-</td>
                 <td>{{ date('Y-M-d', strtotime($key->booking_date)) }}</td>
                 <td>{{ $key->booking_code }}</td>
+                <td>@if($key->paymentimg != null)<a href="{{ asset('documents') }}/{{$key->paymentimg}}">{{ $key->paymentimg }}</a> @else - @endif</td>
+                <td>{{ $key->branch_name }}</td>
               </tr>
               @endforeach
             @else
@@ -83,6 +87,8 @@
                 <td>Rp. {{ number_format($payment->total_payment,0,',','.') }},-</td>
                 <td>{{ date('Y-M-d', strtotime($payment->booking_date)) }}</td>
                 <td>{{ $payment->booking_code }}</td>
+                <td>@if($payment->paymentimg != null)<a href="{{ asset('documents') }}/{{$payment->paymentimg}}" download>{{ $payment->paymentimg }}</a> @else - @endif</td>
+                <td>{{ $payment->branch_name }}</td>
               </tr>
               @endforeach
             @endif

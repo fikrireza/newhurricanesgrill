@@ -59,7 +59,7 @@
               <label class="col-sm-3 control-label">Date</label>
             </div>
             <div class="col-sm-9 {{ $errors->has('block_date') ? 'has-error' : '' }}">
-              <input type="text" name="block_date" class="form-control" id="block_date" value="{{ old('block_date') }}">
+              <input type="text" name="block_date" class="form-control" id="block_date" placeholder="yyyy-mm-dd" value="{{ old('block_date') }}">
               @if($errors->has('block_date'))
                 <span class="help-block">
                   <i>* {{$errors->first('block_date')}}</i>
@@ -143,10 +143,10 @@
               <td>{{ $block->notification }}</td>
               <td>{{ $block->username}}</td>
               <td><span data-toggle="tooltip" title="Edit">
-                    <a href="{{ url('hurricanesmenu/reservation-blockbind/') }}{{'/'.$block->blockreservation_id}}" class="btn btn-warning btn-flat btn-xs edit"><i class="fa fa-edit"></i></a>
+                    <a href="{{ url('hurricanesmenu/reservation-blockbind/') }}{{'/'.$block->blockreservation_id}}" class="btn btn-warning btn-flat btn-xs edit"><i class="fa fa-edit"></i> Edit</a>
                   </span>
                   <span data-toggle="tooltip" title="Delete">
-                    <a href="" class="btn btn-danger btn-flat btn-xs delete" data-toggle="modal" data-target="#myModalDelete" data-value="{{ $block->id }}"><i class="fa fa-trash"></i></a>
+                    <a href="" class="btn btn-danger btn-flat btn-xs delete" data-toggle="modal" data-target="#myModalDelete" data-value="{{ $block->id }}"><i class="fa fa-trash"></i> Delete</a>
                   </span>
               </td>
             </tr>
