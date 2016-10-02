@@ -241,6 +241,19 @@ class MenuController extends Controller
 
     public function recipeStore(Request $request)
     {
+      $message  = [
+        'ingredients.*.size.required' => 'Fill This Field',
+        'ingredients.*.ingredient.required'  => 'Fill This Field',
+      ];
+
+      $validator = Validator::make($request->all(), [
+        'ingredients.*.size'  => 'required',
+        'ingredients.*.ingredient' => 'required',
+      ], $message);
+
+      if($validator->fails()){
+        return redirect()->route('menu.recipeCreate', array('id' => $request->menu_id))->withErrors($validator)->withInput();
+      }
 
       DB::transaction(function() use($request) {
         $recipes = $request->input('ingredients');
@@ -342,6 +355,47 @@ class MenuController extends Controller
     {
       $delete = RecipeMenu::find($id);
       $delete->delete();
+    }
+
+    public function directionsCreate($id)
+    {
+      // dd($id);
+      $menus   = Menus::find($id);
+      // dd($menus->id);
+      $ingredients  = Ingredients::get();
+
+      return view('back.pages.menu.directionscreate', compact('menus', 'ingredients'));
+    }
+
+    public function directionsStore(Request $request)
+    {
+      $menu_id  = $request->menu_id;
+
+      $message  = [
+        'directions.required' => 'Fill This Field',
+      ];
+
+      $validator = Validator::make($request->all(), [
+        'directions'  => 'required',
+      ], $message);
+
+      if($validator->fails()){
+        return redirect()->route('menu.directionsAdd', array('id' => $menu_id))->withErrors($validator)->withInput();
+      }
+
+      $directions = Menus::find($menu_id);
+      $directions->directions = $request->directions;
+      $directions->user_id    = $request->user_id;
+      $directions->save();
+
+      return redirect()->route('menu.menusShow', array('id' => $menu_id))->with('message', 'New Directions Has Been Created');
+    }
+
+    public function directionsEdit($id)
+    {
+      $menus  = Menus::select('id', 'name', 'directions')->find($id);
+
+      return view('back.pages.menu.directionsedit', compact('menus'));
     }
 
 }

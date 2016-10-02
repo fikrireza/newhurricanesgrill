@@ -151,11 +151,11 @@
           <h3 class="box-title pull-right">
           @if ($menus[0]->directions == null)
           <span data-toggle="tooltip" title="Create Recipe">
-            <a href="{{ url('hurricanesmenu/menu-menus/show/') }}{{ '/'.$menus[0]->id}}" class="btn bg-red btn-flat btn-xs edit"><i class="fa fa-plus"> Create</i></a>
+            <a href="{{ url('hurricanesmenu/menu-menus/directions-create/') }}{{ '/'.$menus[0]->id}}" class="btn bg-red btn-flat btn-xs edit"><i class="fa fa-plus"> Create</i></a>
           </span>
           @else
           <span data-toggle="tooltip" title="Edit Recipe">
-            <a href="{{ url('hurricanesmenu/menu-menus/show/') }}{{ '/'.$menus[0]->id}}" class="btn bg-orange btn-flat btn-xs edit"><i class="fa fa-edit"> Edit</i></a>
+            <a href="{{ url('hurricanesmenu/menu-menus/directions-edit/') }}{{ '/'.$menus[0]->id}}" class="btn bg-orange btn-flat btn-xs edit"><i class="fa fa-edit"> Edit</i></a>
           </span>
           @endif</h3>
         </div>
@@ -171,8 +171,7 @@
               </tr>
               @else
               <tr>
-                <td></td>
-                <td></td>
+                <td>{!! $menus[0]->directions !!}</td>
               </tr>
               @endif
             </tbody>

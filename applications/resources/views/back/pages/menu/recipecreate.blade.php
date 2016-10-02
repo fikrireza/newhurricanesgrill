@@ -51,16 +51,16 @@
                 <tr>
                   <td><input type="checkbox" name="chk"/></td>
                   <td>
-                    <div class="form-group {{ $errors->has('ingredients') ? 'has-error' : '' }}">
+                    <div class="form-group {{ $errors->has('ingredients[1][ingredient]') ? 'has-error' : '' }}">
                       <select name="ingredients[1][ingredient]" class="form-control select2" style="width: 100%;">
                         <option value="">-- Choose --</option>
                         @foreach($ingredients as $key)
                           <option value="{{ $key->id }}">{{ $key->name }}&nbsp;&nbsp;-&nbsp;&nbsp;({{ $key->unit }})</option>
                         @endforeach
                       </select>
-                      @if($errors->has('image'))
+                      @if($errors->has('ingredients[1][ingredient]'))
                       <span class="help-block">
-                        <i>* {{$errors->first('image')}}</i>
+                        <i>* {{$errors->first('ingredients[1][ingredient]')}}</i>
                       </span>
                       @endif
                     </div>
@@ -111,7 +111,7 @@
       var cell1 = row.insertCell(0);
       cell1.innerHTML = '<input type="checkbox" name="chk[]"/>';
       var cell2 = row.insertCell(1);
-      cell2.innerHTML = '<select name="ingredients['+numA+'][ingredient]" class="form-control select2"><option value="">-- Choose --</option>@foreach($ingredients as $key)<option value="{{ $key->id }}">{{ $key->name }}&nbsp;&nbsp;-&nbsp;&nbsp;({{ $key->unit}})</option>@endforeach</select>@if($errors->has('image'))<span class="help-block"><i>* {{$errors->first('image')}}</i></span>@endif';
+      cell2.innerHTML = '<select name="ingredients['+numA+'][ingredient]" class="form-control select2"><option value="">-- Choose --</option>@foreach($ingredients as $key)<option value="{{ $key->id }}">{{ $key->name }}&nbsp;&nbsp;-&nbsp;&nbsp;({{ $key->unit}})</option>@endforeach</select>@if($errors->has("ingredients['+numA+'][ingredient]"))<span class="help-block"><i>* {{$errors->first("ingredients['+numA+'][ingredient]")}}</i></span>@endif';
       var cell3 = row.insertCell(2);
       cell3.innerHTML = '<input type="text" name="ingredients['+numA+'][size]" class="form-control" value="" />';
       var cell4 = row.insertCell(3);

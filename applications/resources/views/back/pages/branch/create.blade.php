@@ -138,7 +138,8 @@
           "html": true, //Button which allows you to edit the generated HTML.
           "link": false, //Button to insert a link.
           "image": false, //Button to insert an image.
-          "color": true //Button to change color of font
+          "color": true, //Button to change color of font
+          "blockquote": false
         }
     });
   });

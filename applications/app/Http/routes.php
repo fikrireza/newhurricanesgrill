@@ -92,6 +92,9 @@ Route::get('hurricanesmenu/menu-recipebind/{id}', 'MenuController@recipeBind')->
 Route::post('hurricanesmenu/menu-menus/recipe-change', 'MenuController@recipeChange')->name('menu.recipeChange');
 Route::get('hurricanesmenu/menu-menus/recipe-delete/{id}', 'MenuController@recipeDelete')->name('menu.recipeDelete');
 Route::post('hurricanesmenu/menu-menuimage/', 'MenuController@menuImage')->name('menu.menuImage');
+Route::get('hurricanesmenu/menu-menus/directions-create/{id}', 'MenuController@directionsCreate')->name('menu.directionsAdd');
+Route::post('hurricanesmenu/menu-menus/directions-create', 'MenuController@directionsStore')->name('menu.directionsStore');
+Route::get('hurricanesmenu/menu-menus/directions-edit/{id}', 'MenuController@directionsEdit')->name('menu.directionsEdit');
 
 
 // Authentication //
