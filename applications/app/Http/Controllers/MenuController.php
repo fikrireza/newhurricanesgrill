@@ -206,10 +206,11 @@ class MenuController extends Controller
     {
       $message  = [
         'image.required' => 'Fill This Field',
+        'image.dimensions'  => 'Max Width: 445px, Max Height: 350px',
       ];
 
       $validator  = Validator::make($request->all(), [
-        'image'  => 'required|mimes:jpeg,jpg,png',
+        'image'  => 'required|mimes:jpeg,jpg,png|dimensions:max_width=445,max_height=350',
       ], $message);
 
       if($validator->fails()){
