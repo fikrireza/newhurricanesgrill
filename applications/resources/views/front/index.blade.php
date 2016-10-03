@@ -102,7 +102,7 @@ window._fbq.push(['track', '6038199100965', {'value':'1.00','currency':'IDR'}]);
 			 </div>
 		 </div>
 <script>(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//x.instagramfollowbutton.com/follow.js";s.parentNode.insertBefore(g,s);}(document,"script"));</script>
-		<script src="js/classie.js"></script>
+		<script src="front/js/classie.js"></script>
 		<script>
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 				showLeftPush = document.getElementById( 'showLeftPush' ),
