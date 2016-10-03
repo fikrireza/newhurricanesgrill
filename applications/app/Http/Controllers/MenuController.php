@@ -209,7 +209,7 @@ class MenuController extends Controller
       ];
 
       $validator  = Validator::make($request->all(), [
-        'image'  => 'required',
+        'image'  => 'required|mimes:jpeg,jpg,png',
       ], $message);
 
       if($validator->fails()){
