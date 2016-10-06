@@ -485,6 +485,15 @@ class WebReservationController extends Controller
       $post->flag_used = 1;
       $post->save();
 
+      $email = $request->email;
+
+      if($email != null)
+      {
+        Mail::send('email.subscribe', [], function($message) use($email) {
+          $message->to($email)->to('contact@hurricanesgrill.co.id')->subject('Newsletter Email');
+        });
+      }
+
       return redirect()->route('web.subscribe')->with('success', 'Thank You');
     }
 }
