@@ -231,8 +231,8 @@ window._fbq.push(['track', '6038199100965', {'value':'1.00','currency':'IDR'}]);
 								</div>
 								<h5>Newsletter</h5>
 								<p></p><div class="send"><br>
-
-							<input type="submit" onClick="window.open('page/newsletter.php', 'newwindow', 'width=350, height=600'); return false;" value="Subscribe" >
+									
+							<input type="submit" onClick="window.open('subscribe', 'newwindow', 'width=350, height=600'); return false;" value="Subscribe" >
 						</div>
 							</div>
 							<div class="clearfix"></div>

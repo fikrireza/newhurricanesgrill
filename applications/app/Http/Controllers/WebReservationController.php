@@ -10,6 +10,7 @@ use App\Models\Reservation;
 use App\Models\BlockReservation;
 use App\Models\BlockReservationDetail;
 use App\Models\ConfirmPayment;
+use App\Models\Subscribe;
 use Mail;
 use DB;
 use Validator;
@@ -457,5 +458,33 @@ class WebReservationController extends Controller
 
       return redirect()->route('home')->with('success', 'Thank You for Your Payment');
 
+    }
+
+    public function subscribe()
+    {
+      return view('front.subscribe');
+    }
+
+    public function subscribePost(Request $request)
+    {
+      $message = [
+        'email.required' => "Fill This Field",
+        'email.unique'  => "Your Email Has Been Registered"
+      ];
+
+      $validation = Validator::make($request->all(), [
+        'email' => 'required|email|unique:fra_subscribe,email',
+      ], $message);
+
+      if($validation->fails()) {
+        return redirect()->route('web.subscribe')->withErrors($validation)->withInput();
+      }
+
+      $post = new Subscribe;
+      $post->email  = $request->email;
+      $post->flag_used = 1;
+      $post->save();
+
+      return redirect()->route('web.subscribe')->with('success', 'Thank You');
     }
 }

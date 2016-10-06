@@ -18,6 +18,8 @@ Route::get('reservation-group', 'WebReservationController@groupbook')->name('gro
 Route::post('reservation', 'WebReservationController@store')->name('web.store');
 Route::get('payment-confirm/{booking_code}', 'WebReservationController@confirmpayment')->name('web.confirmpayment');
 Route::post('payment-confirm', 'WebReservationController@confirm')->name('web.confirm');
+Route::get('subscribe', 'WebReservationController@subscribe')->name('web.subscribe');
+Route::post('subscribe', 'WebReservationController@subscribePost')->name('web.subscribePost');
 
 
 Route::get('/hurricanesmenu', 'Auth\AuthController@index')->name('index');

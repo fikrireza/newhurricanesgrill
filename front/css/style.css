@@ -1,20 +1,11 @@
-@font-face {
-    font-family: font1;
-	src: url(../fonts/font1.otf);
-}
-@font-face {
-    font-family: font2;
-    src: url(../fonts/font2.ttf);
-}
-
 .resv{padding-top:5em}
 .img1 {
-		background:url(../img/img1.jpg) no-repeat 50% 50%;
+	background:url(../img/img1.jpg) no-repeat 50% 50%;
 	background-size:cover;min-height:50em;
 	}
-	
+
 .img2 {
-		background:url(../img/img2.jpg) no-repeat 50% 50%;
+	background:url(../img/img2.jpg) no-repeat 50% 50%;
 	background-size:cover;min-height:50em;
 	}
 
@@ -26,7 +17,7 @@ body{
 	position:relative;
 }
 body a{
-    transition:0.5s all;
+  transition:0.5s all;
 	-webkit-transition:0.5s all;
 	-moz-transition:0.5s all;
 	-o-transition:0.5s all;
@@ -43,9 +34,9 @@ input[type="button"],input[type="submit"],.contact-form input[type="submit"]{
 	-ms-transition:0.5s all;
 }
 h1,h2,h3,h4,h5,h6{
-	margin:0;	
-	font-family: 'Philosopher', sans-serif;	
-}	
+	margin:0;
+	font-family: 'Philosopher', sans-serif;
+}
 p{
 	margin:0;
 }
@@ -226,8 +217,8 @@ background: none;
  color:#FFF;
   font-size: 1.5em;
   margin-top: 1.2em;
-  
-} 
+
+}
 i.glyphicon.glyphicon-heart {
   margin-top: 1.4em;
 }
@@ -240,7 +231,7 @@ i.glyphicon.glyphicon-heart {
   -o-border-radius:50%;
   margin: 0 auto;
   text-align: center;
-  position: relative;	
+  position: relative;
   background:#fff;
   border: 2px solid #fff;
   background:#F93;color:#FFF
@@ -768,7 +759,7 @@ p.location i, p.mail i, p.phone i {
 }
 .more-address{
 	padding:2em 0;
-} 
+}
 .send input[type="submit"] {
   font-size: 1.1em;
   background: #F93;
@@ -836,7 +827,7 @@ text-decoration:underline;
 	  -ms-background-size: cover;
 	  min-height: 900px;
 	}
-	
+
 }
 @media (max-width:1700px){
 	.banner {
@@ -848,7 +839,7 @@ text-decoration:underline;
 	  -ms-background-size: cover;
 	  min-height: 800px;
 	}
-	
+
 }
 @media (max-width:1440px){
 	.banner {
@@ -1122,7 +1113,7 @@ text-decoration:underline;
 }
 @media (max-width:768px){
 	.resv{padding-top:0em}
-	
+
 		h3.tittle {
 	 text-align:center;font-size:2.5em
 	}
@@ -1669,4 +1660,3 @@ padding-right:3em;
   font-size: 1.75em;
 }
 }
-
