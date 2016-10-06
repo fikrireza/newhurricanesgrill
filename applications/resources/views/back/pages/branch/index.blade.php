@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-sm-10 {{ $errors->has('name') ? 'has-error' : '' }}">
                   <input type="hidden" name="id" class="form-control" id="editId" value="{{ old('id') }}">
-                  <input type="hidden" name="user_id" class="form-control" id="editUser" value="{{ Auth::user()->id }}">
+                  <input type="hidden" name="user_id" class="form-control" value="{{ Auth::user()->id }}">
                   <input type="text" name="name" class="form-control" id="editName" placeholder="Name" value="{{ old('name') }}">
                   @if($errors->has('name'))
                     <span class="help-block">
@@ -105,7 +105,7 @@
                   <label class="col-sm-2 control-label">Description</label>
                 </div>
                 <div class="col-sm-10 {{ $errors->has('description') ? 'has-error' : '' }}">
-                  <textarea class="textarea form-control" name="description" placeholder="Description Open Hours" style="width: 100%; height: 200px; font-size: 14px; border: 1px solid #dddddd; padding: 10px;" id="editDescription">{{ old('description') }}</textarea>
+                  <textarea class="form-control" name="description" style="width: 100%; height: 200px; font-size: 14px; border: 1px solid #dddddd; padding: 10px;" id="editDescription"></textarea>
                   @if($errors->has('description'))
                     <span class="help-block">
                       <i>* {{$errors->first('description')}}</i>
@@ -189,7 +189,7 @@
               <th>Description</th>
               <th>Phone</th>
               <th>Hotline</th>
-              <th>Creator</th>
+              <th>Actor</th>
               <th colspan="2">Action</th>
             </tr>
             @if($getBranch->isEmpty())
@@ -204,7 +204,7 @@
                 <td>{!! $key->description  !!}</td>
                 <td>{{ $key->phone  }}</td>
                 <td>{{ $key->hotline  }}</td>
-                <td>{{ $key->user_id }}</td>
+                <td>{{ $key->username }}</td>
                 <td>@if($key->flag_active!=0)
                         <span data-toggle="tooltip" title="Deactivated Branch">
                           <a href="" class="btn btn-default btn-flat btn-xs nonactive" data-toggle="modal" data-target="#myModalNonAktif" data-value="{{ $key->id }}"><i class="fa fa-ban"></i></a>
@@ -287,7 +287,17 @@
           $('#editId').attr('value', id);
           $('#editName').attr('value', name);
           $('#editAddress').attr('value', address);
-          $('#editDescription').attr('value', description);
+          $('#editDescription').val(description).wysihtml5({
+                                toolbar: {
+                                    "font-styles": true, //Font styling, e.g. h1, h2, etc.
+                                    "emphasis": true, //Italics, bold, etc.
+                                    "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers.
+                                    "html": true, //Button which allows you to edit the generated HTML.
+                                    "link": false, //Button to insert a link.
+                                    "image": false, //Button to insert an image.
+                                    "color": true //Button to change color of font
+                                  }
+                              });
           $('#editPhone').attr('value', phone);
           $('#editHotline').attr('value', hotline);
           $('#editMaps').attr('value', maps);

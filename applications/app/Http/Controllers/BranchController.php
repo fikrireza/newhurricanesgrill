@@ -25,10 +25,12 @@ class BranchController extends Controller
         $this->middleware('isUser');
     }
 
-    
+
     public function index()
     {
-      $getBranch = Branch::get();
+      $getBranch = Branch::join('fra_users', 'fra_users.id', '=', 'fra_branch.user_id')
+                          ->select('fra_branch.*', 'fra_users.name as username')
+                          ->get();
 
       return view('back.pages.branch.index', compact('getBranch'));
     }
