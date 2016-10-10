@@ -146,6 +146,7 @@
             @else
               <?php $grandTotal = 0; ?>
               @foreach($allReservation as $reservation)
+              <?php $size = 0; ?>
               @foreach($reservation as $reservation_time)
 
               @if($reservation_time['size'] > 9 && $reservation_time['status'] == 0)
@@ -201,11 +202,14 @@
                     @endif
                   @endif</td>
               </tr>
-              <?php $grandTotal++; ?>
+              <?php
+                $grandTotal++;
+                $size+= $reservation_time['size'];
+              ?>
               @endforeach
               <tr style="background:#069;color:#FFF">
                 <td colspan="6">Reservation Total : {{ count($reservation) }}</td>
-                <td></td>
+                <td>{{ $size }}</td>
                 <td colspan="5"></td>
               </tr>
               @endforeach
