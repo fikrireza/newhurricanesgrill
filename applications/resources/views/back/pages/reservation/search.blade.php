@@ -166,7 +166,7 @@
                 <td>{{ $reservation_time['handphone'] }}</td>
                 <td>{{ $reservation_time['size'] }}</td>
                 <td>{{ $reservation_time['email'] }}</td>
-                <td>{!! $reservation_time['specialreq'] !!}</td>
+                <td>@if ($reservation_time['specialreq'] != null) {!! $reservation_time['specialreq'] !!} @else - @endif</td>
                 <td>@if($reservation_time['username'] != '')
                     {{ $reservation_time['username'] }}
                   @else

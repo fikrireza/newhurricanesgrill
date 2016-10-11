@@ -138,6 +138,7 @@
             @else
               <?php $grandTotal = 0; ?>
               @foreach($allReservation as $reservation)
+              <?php $size = 0; ?>
               @foreach($reservation as $reservation_time)
 
               @if($reservation_time['size'] > 9 && $reservation_time['status'] == 0)
@@ -157,7 +158,7 @@
                 <td>{{ $reservation_time['handphone'] }}</td>
                 <td>{{ $reservation_time['size'] }}</td>
                 <td>{{ $reservation_time['email'] }}</td>
-                <td>{!! $reservation_time['specialreq'] !!}</td>
+                <td>@if ($reservation_time['specialreq'] != null) {!! $reservation_time['specialreq'] !!} @else - @endif</td>
                 <td>@if($reservation_time['username'] != '')
                     {{ $reservation_time['username'] }}
                   @else
@@ -193,11 +194,14 @@
                     @endif
                   @endif</td>
               </tr>
-              <?php $grandTotal++; ?>
+              <?php
+              $grandTotal++;
+              $size+= $reservation_time['size'];
+              ?>
               @endforeach
               <tr style="background:#069;color:#FFF">
                 <td colspan="6">Reservation Total : {{ count($reservation) }}</td>
-                <td></td>
+                <td>{{ $size }}</td>
                 <td colspan="5"></td>
               </tr>
               @endforeach
