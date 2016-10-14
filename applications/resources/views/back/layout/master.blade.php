@@ -5,7 +5,7 @@
     @include('back.includes.head')
     @yield('headscript')
   </head>
-  <body class="hold-transition skin-red sidebar-mini">
+  <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
