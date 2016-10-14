@@ -1,5 +1,14 @@
 @extends('back.layout.master')
 
+@section('headscript')
+  <style>
+    .nav-tabs-custom > .nav-tabs > li.active {
+      border-top-color: #dd4b39;
+    }
+  </style>
+@endsection
+
+
 @section('content')
   <div class="row">
 
@@ -53,13 +62,13 @@
       <div class="col-md-9">
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
-            <li id="tabUbahProfile"
-              @if(Session::has('errors')))
+            <li class="active"
+              @if(Session::has('message')))
                 class="active"
               @endif
              ><a href="#settings" data-toggle="tab">Change Profile</a></li>
             <li
-              @if(Session::has('erroroldpass'))
+              @if($errors->has('oldpass') || $errors->has('newpass'))
                 class="active"
               @endif
             ><a href="#password" data-toggle="tab">Change Password</a></li>
