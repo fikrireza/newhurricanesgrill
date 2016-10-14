@@ -22,7 +22,7 @@ class AccountManagementController extends Controller
   */
   public function __construct()
   {
-      $this->middleware('isUser');
+      $this->middleware('isUser', ['except' => ['verify', 'setpassword']]);
   }
 
 
