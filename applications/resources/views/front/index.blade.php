@@ -20,6 +20,7 @@
 <script src="front/js/modernizr.custom.js"></script>
 <script type="text/javascript" src="front/js/move-top.js"></script>
 <script type="text/javascript" src="front/js/easing.js"></script>
+<link href="{{ asset('front/fonts/fonts.css') }}" rel="stylesheet">
 <script type="text/javascript">
 			jQuery(document).ready(function($) {
 				$(".scroll").click(function(event){
@@ -231,7 +232,7 @@ window._fbq.push(['track', '6038199100965', {'value':'1.00','currency':'IDR'}]);
 								</div>
 								<h5>Newsletter</h5>
 								<p></p><div class="send"><br>
-									
+
 							<input type="submit" onClick="window.open('subscribe', 'newwindow', 'width=350, height=600'); return false;" value="Subscribe" >
 						</div>
 							</div>
