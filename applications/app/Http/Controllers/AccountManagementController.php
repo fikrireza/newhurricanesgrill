@@ -142,7 +142,7 @@ class AccountManagementController extends Controller
       return view('auth.createpassword')->with('email', $user->email)->with('verifytoken', $code);
     }
     else {
-      return redirect()->route('welcomepage')->with('messageactivationfailed', "Activation Code is not Valid.");
+      return redirect()->route('index')->with('messageactivationfailed', "Activation Code is not Valid.");
     }
   }
 
@@ -181,7 +181,7 @@ class AccountManagementController extends Controller
       return redirect()->route('dashboard')->with('firsttimelogin', "Anda telah berhasil melakukan aktifasi akun. Selanjutnya, anda bisa menggunakan akun ini untuk login ke dalam sistem dan dapat menggunakan fitur yang telah disediakan.");
     }
     else {
-      return redirect()->route('welcomepage')->with('message', "Silahkan lakukan login.");
+      return redirect()->route('index')->with('message', "Silahkan lakukan login.");
     }
   }
 

@@ -19,6 +19,13 @@
     <![endif]-->
   </head>
   <body class="skin-blue-light hold-transition login-page">
+    @if(Session::has('messageactivationfailed'))
+    <div class="alert alert-success panjang">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
+      <p>{{ Session::get('messageactivationfailed') }}</p>
+    </div>
+    @endif
     <div class="login-box">
       <div class="login-logo">
         <img src="{{asset('images/logo-kecil-2.png')}}" alt="SPD" />
