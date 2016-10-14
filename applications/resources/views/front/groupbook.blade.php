@@ -12,6 +12,8 @@
 <link rel="icon" href="{{ asset('front/img/icon.png') }}" type="image/x-icon" />
 <link type="text/css" rel="stylesheet" href="{{ asset('front/css/animate.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/datepicker/datepicker3.css') }}">
+<link href="{{ asset('front/fonts/fonts.css') }}" rel="stylesheet">
+
 <style>
   img:hover.news {
          opacity: 0.7;
@@ -24,6 +26,16 @@
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
       border-top: 8px solid #FFF;
+  }
+
+  .judul {
+    font-family: 'font1';
+    font-size: 40px;
+  }
+
+  .telp {
+    font-family: 'font1';
+    font-size: 20px;
   }
   @media (max-width: 1000px) {
     .navbar-header {
@@ -59,11 +71,12 @@
     border:1px #f93 solid;
     background:#f93;
     color:#000000;
+    margin-left: 15px;
     transition:0.5s all;
     -webkit-transition:0.5s all;
     -moz-transition:0.5s all;
     -o-transition:0.5s all;
-  -ms-transition:0.5s all;
+    -ms-transition:0.5s all;
   }
 
   .groupbook:hover{
@@ -117,8 +130,10 @@
       <div class="col-md-1"></div>
       <div class="col-md-4">
         <div style="padding-left:15px">
-          <font style="font-size:25px;" face="font1">GROUP BOOKING</font>
-          <font style="font-size:16px;" face="font1">
+          <div class="judul">
+            GROUP BOOKING
+          </div>
+          <div class="telp">
             <p>
               <a href="tel:+622127513388" style="color:#000;text-decoration:none"> +6221 2751 3388 </a>|
               <a href="tel:+622127513399" style="color:#000;text-decoration:none">+6221 2751 3399 </a>
@@ -126,7 +141,7 @@
             <p>
               <a href="tel:+622127513399" style="color:#000;text-decoration:none"> HOTLINE : +62812 9002 5555 </a>
             </p>
-          </font>
+          </div>
         </div>
       </div>
     </div>
@@ -135,11 +150,10 @@
       <div class="col-md-1"></div>
       <div class="col-md-4" style="font-family:font2">
         <br />
-        {{-- <p align="left">For group booking ( 10 people or more ), please kindly click this button :</p> --}}
-        <p align="left">
-          <a href="{{ route('groupbook') }}"><button class="btn btn-info groupbook">Back</button></a>
-        </p>
-
+        <a href="{{ route('web.reservation') }}"><button class="btn btn-info groupbook">Back</button></a>
+        </br>
+        </br>
+        </br>
         <form class="form-horizontal" method="post" action="{{ route('web.store') }}">
           {{ csrf_field() }}
           <div class="form-group">

@@ -8,13 +8,13 @@
 <meta name="description" content="Hurricane's Grill Indonesia, Best Steaks and Ribs. Hurricanes Grill Indonesia, Hurricanes Grill Jakarta">
 
 <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-<link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 <link rel="icon" href="{{ asset('front/img/icon.png') }}" type="image/x-icon" />
 <link type="text/css" rel="stylesheet" href="{{ asset('front/css/animate.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/datepicker/datepicker3.css') }}">
+<link href="{{ asset('front/fonts/fonts.css') }}" rel="stylesheet">
 <style>
   img:hover.news {
-         opacity: 0.7;
+      opacity: 0.7;
       filter: alpha(opacity=40); /* For IE8 and earlier */
   }
 
@@ -25,6 +25,17 @@
       border-right: 8px solid transparent;
       border-top: 8px solid #FFF;
   }
+
+  .judul {
+    font-family: 'font1';
+    font-size: 40px;
+  }
+
+  .telp {
+    font-family: 'font1';
+    font-size: 20px;
+  }
+
   @media (max-width: 1000px) {
     .navbar-header {
         float: none;
@@ -81,7 +92,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
-<body style="background:#000;font-family:font1;">
+<body style="font-family: font1;background:#000;">
 	<div class="col-md-12 column">
     <div class="container">
       <nav class="navbar navbar-default pc_only" role="navigation" style="display:none;background:#000;border:none;font-family: 'Josefin Sans', sans-serif;">
@@ -115,24 +126,12 @@
       <br />
       <br />
       <div class="col-md-1"></div>
-      {{-- <div class="col-md-6">
-        <div class="pc_only" style="display:none">
-          <font style="font-size:30px;" face="font1">Reservation Online</font>
-          <font style="font-size:20px;" face="font1">
-            <p>
-              <a href="tel:+622127513388" style="color:#000;text-decoration:none"> +6221 2751 3388 </a>|
-              <a href="tel:+622127513399" style="color:#000;text-decoration:none">+6221 2751 3399 </a>
-            </p>
-            <p>
-              <a href="tel:+622127513399" style="color:#000;text-decoration:none"> Hotline : +62812 9002 5555 </a>
-            </p>
-          </font>
-        </div>
-      </div> --}}
       <div class="col-md-4">
         <div style="padding-left:15px">
-          <font style="font-size:25px;" face="font1">RESERVATION ONLINE</font>
-          <font style="font-size:16px;" face="font1">
+          <div class="judul">
+            RESERVATION ONLINE
+          </div>
+          <div class="telp">
             <p>
               <a href="tel:+622127513388" style="color:#000;text-decoration:none"> +6221 2751 3388 </a>|
               <a href="tel:+622127513399" style="color:#000;text-decoration:none">+6221 2751 3399 </a>
@@ -140,7 +139,7 @@
             <p>
               <a href="tel:+622127513399" style="color:#000;text-decoration:none"> HOTLINE : +62812 9002 5555 </a>
             </p>
-          </font>
+          </div>
         </div>
       </div>
     </div>
