@@ -75,23 +75,24 @@
         <div class="box-body">
           <div class="row">
             <div class="col-xs-3">
-              <input type="text" class="form-control" name="booking_code" placeholder="Booking Code">
+              <input type="text" class="form-control" name="booking_code" placeholder="Booking Code" value="">
             </div>
             <div class="col-xs-3">
-              <input type="text" class="form-control" id="datepicker">
+              <input type="text" class="form-control" name="reserve_date" id="reserve_date" value="">
             </div>
             <div class="col-xs-3">
               <select name="season" class="form-control">
-                <option value="">-- Choose --</option>
+                <option value="all">-- Choose --</option>
                 <option value="lunch">Lunch</option>
                 <option value="dinner">Dinner</option>
               </select>
             </div>
             <div class="col-xs-3">
-              <select name="season" class="form-control">
-                <option value="">-- Choose --</option>
-                <option value="gunawarman">Gunawarman</option>
-                <option value="noblehouse">Noble House</option>
+              <select name="branch_id" class="form-control">
+                <option value="all">-- Choose --</option>
+                @foreach($branch_id as $key)
+                  <option value="{{ $key->id }}">{{ $key->name}}</option>
+                @endforeach
               </select>
             </div>
           </div>
@@ -229,11 +230,8 @@
 </script>
 <script type="text/javascript">
   $(function () {
-    //Initialize Select2 Elements
-    $(".select2").select2();
-
     //Date picker
-    $('#datepicker').datepicker({
+    $('#reserve_date').datepicker({
       autoclose: true
     });
 
