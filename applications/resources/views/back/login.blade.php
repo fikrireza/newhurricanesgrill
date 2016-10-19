@@ -46,7 +46,13 @@
               </span>
             @endif
           </div>
-
+          <div class="form-group {{ Session::has('error') ? 'has-error' : ''}}">
+            @if(Session::has('error'))
+              <span class="help-block">
+                <i>* {{ Session::get('error') }}</i>
+              </span>
+            @endif
+          </div>
           <div class="row">
             <div class="col-sm-8">
               <a href="#">Forgot Password</a>

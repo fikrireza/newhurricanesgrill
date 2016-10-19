@@ -54,7 +54,6 @@ class AuthController extends Controller
 	 */
 	public function postLogin(Request $request, Guard $auth)
 	{
-    // dd($request);
     $message = [
       'email.required' => 'Fill This Field',
       'password.required' => 'Fill This Field'
@@ -69,13 +68,12 @@ class AuthController extends Controller
       return redirect()->route('index')->withErrors($validator)->withInput();
     }
 
-    // dd($request);
 		$logValue = $request->input('email');
-    // dd($logValue);
+
 		$logAccess = filter_var($logValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-    // dd($logAccess);
+
 		$throttles = in_array(ThrottlesLogins::class, class_uses_recursive(get_class($this)));
-    //dd($throttles);
+
 		if ($throttles && $this->hasTooManyLoginAttempts($request))
 		{
 			return redirect()->route('index')->with('error', 'You have reached the maximum number of login attempts. Try again in one minute.')->withInput($request->only('email'));
@@ -96,7 +94,7 @@ class AuthController extends Controller
 		}
 
 		$user = $auth->getLastAttempted();
-    // dd($user);
+
 		if($user->flag_active)
 		{
 			if ($throttles)
@@ -119,9 +117,7 @@ class AuthController extends Controller
 
 		$request->session()->put('user_id', $user->id);
 
-    return redirect()->route('index')->with('error', 'You must verify your email before you can access the site. ' .
-                '<br>If you have not received the confirmation email check your spam folder.'.
-                '<br>To get a new confirmation email please <a href="' . url('') . '" class="alert-link">clic here</a>.');
+    return redirect()->route('index');
 	}
 
   public function getLogout()
