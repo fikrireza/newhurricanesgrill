@@ -198,14 +198,18 @@ window._fbq.push(['track', '6038199100965', {'value':'1.00','currency':'IDR'}]);
 								</div>
 								<h5>Noble House </h5>
 								<p>Ground Floor #1 Lingkar Mega Kuningan Kav E 4.2 No.2
-								Jakarta 12950</p>
+									Jakarta 12950
+								</p></a>
 								<br />
-								<p><b>Opening Soon</b></p>
-
-							</a>
+								<p><b>Opening Hours</b></p>
+								<p style="font-size:11px">Monday - Thursday : 11.00AM - 10.00PM<br>
+								Friday - Saturday : 11.00AM - 12.00AM<br>
+								Sunday & Public Holidays : 11.00AM - 10.00PM
+								</p>
 							</div>
 							<div class="clearfix"></div>
 					 </div>
+					 
 					 <div class="col-md-6 serve-img">
 
 					    <img src="front/img/new/gallerya3.jpg" width="100%"/>
