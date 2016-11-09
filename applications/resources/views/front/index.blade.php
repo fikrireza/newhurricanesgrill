@@ -29,7 +29,13 @@
 				});
 			});
 </script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+<script src="front/js/jquery.snow.min.1.0.js"></script>
+<script>
+	$(document).ready( function(){
+	    $.fn.snow({ minSize: 5, maxSize: 50, newOn: 500, flakeColor: '#fff' });
+	});
+</script>
 <style>
  .panel-transparent {
         background: none;
@@ -209,7 +215,7 @@ window._fbq.push(['track', '6038199100965', {'value':'1.00','currency':'IDR'}]);
 							</div>
 							<div class="clearfix"></div>
 					 </div>
-					 
+
 					 <div class="col-md-6 serve-img">
 
 					    <img src="front/img/new/gallerya3.jpg" width="100%"/>
