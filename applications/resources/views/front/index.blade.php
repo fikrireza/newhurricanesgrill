@@ -192,10 +192,8 @@ window._fbq.push(['track', '6038199100965', {'value':'1.00','currency':'IDR'}]);
 								</p></a>
 								<br />
 								<p><b>Opening Hours</b></p>
-								<p style="font-size:11px">Monday - Thursday : 11.00AM - 10.00PM<br>
-								Friday - Saturday : 11.00AM - 12.00AM<br>
-								Sunday & Public Holidays : 11.00AM - 10.00PM
-								</p>
+								<p style="font-size:11px">Sunday - Friday : 11.00AM - 11.00PM<br>
+								Saturday : 11.00AM - 12.00AM</p>
 							</div>
 							<div class="col-md-6 service-grid">
 								<a style="cursor:pointer" onClick="window.open('https://www.google.co.id/maps/place/Noble+House/@-6.2280659,106.823691,18z/data=!3m1!4b1!4m5!3m4!1s0x2e69f3e46742dd59:0x400fe3a611237ed7!8m2!3d-6.2280686!4d106.8247853', 'newwindow', 'width=500,height=600'); return false;">
@@ -208,10 +206,8 @@ window._fbq.push(['track', '6038199100965', {'value':'1.00','currency':'IDR'}]);
 								</p></a>
 								<br />
 								<p><b>Opening Hours</b></p>
-								<p style="font-size:11px">Monday - Thursday : 11.00AM - 10.00PM<br>
-								Friday - Saturday : 11.00AM - 12.00AM<br>
-								Sunday & Public Holidays : 11.00AM - 10.00PM
-								</p>
+								<p style="font-size:11px">Sunday - Thursday : 11.00AM - 11.00PM<br>
+								Friday - Saturday : 11.00AM - 12.00AM</p>
 							</div>
 							<div class="clearfix"></div>
 					 </div>
